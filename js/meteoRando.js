@@ -1,7 +1,14 @@
 export async function afficherMeteo(lat,lon){
 
-const date = document.getElementById("dateRando").value
-if(!date) return
+let date = document.getElementById("dateRando").value
+
+if(!date){
+
+const aujourd = new Date()
+
+date = aujourd.toISOString().split("T")[0]
+
+}
 
 const url =
 `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=Europe/Paris`
