@@ -108,7 +108,7 @@ export const randos = [
 "Luberon",
 "Malaucène, le Barroux",
 "Malemort du Comtat. La combe du diable",
-"Marignon. Monts de Vaucluse,"
+"Marignon. Monts de Vaucluse",
 "Marseille. Cirque des walkyries",
 "Marseilleveyre",
 "Masmolène. La Capelle et ",
