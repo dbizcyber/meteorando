@@ -68,8 +68,6 @@ remplirMenuAnimateurs();
 gestionAutreAnimateur();
 
 /* parkings covoiturage */
-
-remplirMenuParkings();
 gestionAutreParking();
 
 /* carte parking rando */
