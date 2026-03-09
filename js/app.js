@@ -78,16 +78,6 @@ document
 .addEventListener("click", chercherLieu);
 
 /* météo */
-document
-.getElementById("dateRando")
-.addEventListener("change", () => {
-
-const lat = marker.getLatLng().lat
-const lon = marker.getLatLng().lng
-
-afficherMeteo(lat,lon)
-
-})
 
 /* cout covoiturage */
 
