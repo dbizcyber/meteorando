@@ -17,6 +17,7 @@ maxZoom:19
 marker = L.marker(CHATEAURENARD,{draggable:true}).addTo(map)
 
 calculRoute(CHATEAURENARD)
+afficherMeteo(CHATEAURENARD[0],CHATEAURENARD[1])
 
 marker.on("dragend", () => {
 
@@ -24,6 +25,7 @@ const pos = marker.getLatLng()
 
 calculRoute([pos.lat,pos.lng])
 
+afficherMeteo(pos.lat,pos.lng)
 })
 
 }
