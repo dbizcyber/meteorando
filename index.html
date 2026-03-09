@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Création fiche randonnée</title>
+
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+
+body{
+font-family:Arial;
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
+
+section{
+border:1px solid #ccc;
+padding:15px;
+margin-bottom:20px;
+border-radius:8px;
+}
+
+label{
+display:block;
+margin-top:10px;
+}
+
+#map{
+height:400px;
+margin-top:10px;
+}
+
+canvas{
+max-height:300px;
+}
+
+pre{
+white-space:pre-wrap;
+background:#f6f6f6;
+padding:15px;
+border-radius:6px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Création fiche randonnée</h1>
+
+<!-- INFORMATIONS GENERALES -->
+
+<section>
+
+<h2>Informations générales</h2>
+
+<label>Nom de la randonnée</label>
+<input id="nomRando">
+
+<label>Date de la randonnée</label>
+<input type="date" id="dateRando">
+
+<label>Animateur</label>
+<input id="nomAnimateur">
+
+</section>
+
+
+<!-- METEO -->
+
+<section>
+
+<h2>Météo prévue</h2>
+
+<div id="meteoRando">
+
+<p>Météo : <span id="meteoEtat"></span></p>
+
+<p>Température : <span id="meteoTemp"></span></p>
+
+<p>Pluie : <span id="meteoPluie"></span></p>
+
+<p>Vent : <span id="meteoVent"></span></p>
+
+<p>Rafales : <span id="meteoRafales"></span></p>
+
+</div>
+
+</section>
+
+
+<!-- COVOITURAGE -->
+
+<section>
+
+<h2>Covoiturage</h2>
+
+<label>Parking covoiturage</label>
+
+<select id="parkingCovoiturage">
+
+<option>Parking Bricomarché - Châteaurenard</option>
+<option>Parking MIN - Châteaurenard</option>
+<option>Parking du Stade - Châteaurenard</option>
+<option>Parking Super U - Châteaurenard</option>
+<option>Parking des Allées - Châteaurenard</option>
+<option value="autre">Autre</option>
+
+</select>
+
+<label>Heure de rendez-vous</label>
+<input type="time" id="heureRV">
+
+<p>
+Heure de départ :
+<span id="heureDepart"></span>
+</p>
+
+<label>Trajet suggéré</label>
+
+<textarea id="itineraire"></textarea>
+
+</section>
+
+
+<!-- PARKING RANDO -->
+
+<section>
+
+<h2>Parking départ randonnée</h2>
+
+<input id="lieuRecherche" placeholder="Rechercher un lieu">
+
+<button id="btnGeocoder">
+Localiser
+</button>
+
+<div id="map"></div>
+
+<p>
+Distance A/R :
+<span id="distanceAR">0</span> km
+</p>
+
+<p>
+Adresse :
+<span id="parkingRandoAdresse"></span>
+</p>
+
+<p>
+GPS :
+<span id="latParking"></span>,
+<span id="lonParking"></span>
+</p>
+
+</section>
+
+
+<!-- COUTS -->
+
+<section>
+
+<h2>Coût du trajet</h2>
+
+<label>Autoroute (€)</label>
+
+<input type="number" id="autoroute" value="0">
+
+<p>Coût Km : <span id="coutKm"></span></p>
+
+<p>Total trajet : <span id="coutTotal"></span></p>
+
+<p>Covoiturage (4) : <span id="cout4"></span></p>
+
+<p>Covoiturage (5) : <span id="cout5"></span></p>
+
+</section>
+
+
+<!-- GPX -->
+
+<section>
+
+<h2>Analyse GPX</h2>
+
+<input type="file" id="gpxFile" accept=".gpx">
+
+<p>Distance : <span id="distanceGPX"></span> km</p>
+
+<p>Dénivelé + : <span id="denivele"></span> m</p>
+
+<p>Durée : <span id="duree"></span></p>
+
+<p>IBP : <span id="ibp"></span></p>
+
+<p>Effort : <span id="effort"></span></p>
+
+<label>Technicité</label>
+<input id="technicite" type="number" min="1" max="5">
+
+<label>Risque</label>
+<input id="risque" type="number" min="1" max="5">
+
+</section>
+
+
+<!-- PROFIL -->
+
+<section>
+
+<h2>Profil altimétrique</h2>
+
+<label>Heure départ marche</label>
+<input type="time" id="heureDepartMarche">
+
+<label>Vitesse moyenne km/h</label>
+<input type="number" id="vitesse" value="4">
+
+<p>Durée déplacement : <span id="dureeMarche"></span></p>
+
+<canvas id="profilAltitude"></canvas>
+
+</section>
+
+
+<!-- REMARQUES -->
+
+<section>
+
+<h2>Remarques</h2>
+
+<textarea id="remarques"></textarea>
+
+</section>
+
+
+<!-- RESUME -->
+
+<section>
+
+<h2>Résumé</h2>
+
+<button id="btnResume">
+Générer le résumé
+</button>
+
+<pre id="resumeRando"></pre>
+
+</section>
+
+
+<!-- ENVOI -->
+
+<section>
+
+<h2>PDF et envoi</h2>
+
+<label>Email pour copie</label>
+<input type="email" id="emailUser">
+
+<button id="btnEnvoyer">
+Créer PDF et envoyer
+</button>
+
+</section>
+
+
+<!-- JS -->
+
+<script type="module" src="js/app.js"></script>
+
+</body>
+
+</html>
