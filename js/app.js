@@ -78,6 +78,10 @@ document
 .getElementById("btnGeocoder")
 .addEventListener("click", chercherLieu);
 
+/* météo */
+
+afficherMeteo();
+
 /* cout covoiturage */
 
 document
