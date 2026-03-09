@@ -136,6 +136,7 @@ const pente=slopes[ctx.dataIndex].toFixed(1)
 
 return `Altitude ${alt} m | Dist ${d} km | pente ${pente}%`
 }
+}
 },
 
 title:{
