@@ -164,7 +164,7 @@ function legende(){
 
 const nom=document.getElementById("nomRando").value
 const date=document.getElementById("dateRando").value
-const anim=document.getElementById("nomAnimateur").value
+const anim=document.getElementById("Animateur").value
 
 return `${nom} - ${date} - ${anim}`
 
