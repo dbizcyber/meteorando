@@ -3,6 +3,7 @@ const CHATEAURENARD = [43.8833,4.8544]
 let map
 let marker
 let routeLine
+import { calculCovoiturage } from "./covoiturage.js"
 
 export function initCarte(){
 
@@ -77,7 +78,6 @@ const distanceKm = route.distance / 1000
 const AR = (distanceKm*2).toFixed(1)
 
 document.getElementById("distanceAR").textContent = AR
-import { calculCovoiturage } from "./covoiturage.js"
 
 calculCovoiturage()
 
