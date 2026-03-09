@@ -1,23 +1,24 @@
 import { randos } from "../data/randos.js";
 
-export function activerRecherche() {
+export function activerRecherche(){
 
 const champ = document.getElementById("rechercheRando");
-const select = document.getElementById("nomRando");
+const select = document.getElementById("rando");
 
 champ.addEventListener("input", () => {
 
-const filtre = champ.value.toLowerCase();
+const texte = champ.value.toLowerCase();
 
 select.innerHTML = "";
 
 randos
-.filter(r => r.toLowerCase().includes(filtre))
+.filter(r => r.nom.toLowerCase().includes(texte))
 .forEach(r => {
 
 const option = document.createElement("option");
-option.value = r;
-option.textContent = r;
+
+option.value = r.nom;
+option.textContent = r.nom;
 
 select.appendChild(option);
 
