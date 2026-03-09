@@ -88,5 +88,3 @@ const i = Math.round(deg / 22.5) % 16
 return dirs[i]
 
 }
-
-Donc dans meteoRando.js il y a :
