@@ -12,13 +12,13 @@ const texte = champ.value.toLowerCase();
 select.innerHTML = "";
 
 randos
-.filter(r => r.nom.toLowerCase().includes(texte))
+.filter(r => r.toLowerCase().includes(texte))
 .forEach(r => {
 
 const option = document.createElement("option");
 
-option.value = r.nom;
-option.textContent = r.nom;
+option.value = r;
+option.textContent = r;
 
 select.appendChild(option);
 
