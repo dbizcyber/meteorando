@@ -1,16 +1,17 @@
 import { remplirMenu } from "./menuRandos.js";
 import { activerRecherche } from "./rechercheRandos.js";
-import { initHoraires } from "./horairesRando.js"
+import { initHoraires } from "./horairesRando.js";
 import { remplirMenuAnimateurs } from "./menuAnimateurs.js";
 import { activerRechercheAnimateur } from "./rechercheAnimateur.js";
 import { remplirMenuParkings } from "./menuParkings.js";
-import { initCarte, chercherLieu } from "./carteParking.js"
-import { calculCovoiturage } from "./covoiturage.js"
-import { initGPX } from "./gpxAnalyse.js"
-import { initProfilGPX } from "./profilAltitude.js"
-import { afficherMeteo } from "./meteoRando.js"
-import { initResume } from "./resumeRando.js"
-import { initEnvoi } from "./envoiRando.js"
+import { initCarte, chercherLieu } from "./carteParking.js";
+import { calculCovoiturage } from "./covoiturage.js";
+import { initGPX } from "./gpxAnalyse.js";
+import { initProfilGPX } from "./profilAltitude.js";
+import { afficherMeteo } from "./meteoRando.js";
+import { initResume } from "./resumeRando.js";
+import { initEnvoi } from "./envoiRando.js";
+
 
 function gestionAutreAnimateur(){
 
@@ -20,15 +21,31 @@ const champ = document.getElementById("nouvelAnimateur");
 select.addEventListener("change", () => {
 
 if(select.value.startsWith("Autre")){
-
 champ.style.display = "block";
 champ.focus();
-
 }else{
-
 champ.style.display = "none";
 champ.value = "";
+}
 
+});
+
+}
+
+
+function gestionAutreParking(){
+
+const select = document.getElementById("parking");
+const champ = document.getElementById("nouveauParking");
+
+select.addEventListener("change", () => {
+
+if(select.value.startsWith("Autre")){
+champ.style.display = "block";
+champ.focus();
+}else{
+champ.style.display = "none";
+champ.value = "";
 }
 
 });
@@ -42,73 +59,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
 remplirMenu();
 activerRecherche();
+initHoraires();
 
-initHoraires()
 /* animateurs */
 
 remplirMenuAnimateurs();
 activerRechercheAnimateur();
 gestionAutreAnimateur();
 
-/* park_covoiturage*/
+/* parkings covoiturage */
+
 remplirMenuParkings();
 gestionAutreParking();
 
-/* park_départ_randos*/
-initCarte()
+/* carte parking rando */
+
+initCarte();
 
 document
 .getElementById("btnGeocoder")
-.addEventListener("click", chercherLieu)
+.addEventListener("click", chercherLieu);
 
-/* cout_voiturage*/
+/* cout covoiturage */
+
 document
 .getElementById("autoroute")
-.addEventListener("input", calculCovoiturage)
+.addEventListener("input", calculCovoiturage);
 
-initProfilGPX()
+/* gpx */
 
-});
+initGPX();
+initProfilGPX();
 
-/* analyse gpx*/
-document.addEventListener("DOMContentLoaded", () => {
+/* résumé + envoi */
 
-remplirMenu()
-activerRecherche()
-
-remplirMenuAnimateurs()
-activerRechercheAnimateur()
-
-gestionAutreAnimateur()
-
-initCarte()
-
-initGPX()   // ← ajout ici
-
-initResume()
-
-initEnvoi()
-
-})
-function gestionAutreParking(){
-
-const select = document.getElementById("parking");
-const champ = document.getElementById("nouveauParking");
-
-select.addEventListener("change", () => {
-
-if(select.value.startsWith("Autre")){
-
-champ.style.display = "block";
-champ.focus();
-
-}else{
-
-champ.style.display = "none";
-champ.value = "";
-
-}
+initResume();
+initEnvoi();
 
 });
-
-}
