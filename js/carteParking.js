@@ -50,6 +50,7 @@ marker.setLatLng([lat,lon])
 map.setView([lat,lon],11)
 
 calculRoute([lat,lon])
+afficherMeteo(lat,lon)
 
 })
 
