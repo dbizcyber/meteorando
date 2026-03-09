@@ -1,9 +1,9 @@
+import { calculCovoiturage } from "./covoiturage.js"
 const CHATEAURENARD = [43.8833,4.8544]
 
 let map
 let marker
 let routeLine
-import { calculCovoiturage } from "./covoiturage.js"
 
 export function initCarte(){
 
