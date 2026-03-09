@@ -1,0 +1,342 @@
+/* =========================
+VARIABLES COULEURS
+========================= */
+
+:root{
+
+--vert:#2d6a4f;
+--vert-clair:#95d5b2;
+
+--bleu:#1d3557;
+--bleu-clair:#a8dadc;
+
+--orange:#f4a261;
+
+--violet:#6a4c93;
+
+--rouge:#e63946;
+
+--turquoise:#2a9d8f;
+
+--brun:#7f5539;
+
+--gris:#6c757d;
+
+--fond:#f1f5f9;
+
+}
+
+
+/* =========================
+STYLE GLOBAL
+========================= */
+
+body{
+
+font-family: "Segoe UI", Roboto, Arial;
+background: var(--fond);
+margin:0;
+padding:30px;
+color:#333;
+
+}
+
+h1{
+
+text-align:center;
+margin-bottom:30px;
+color:var(--vert);
+font-size:32px;
+
+}
+
+h2{
+
+margin-top:0;
+font-size:20px;
+
+}
+
+
+/* =========================
+CARTE SECTION GENERIQUE
+========================= */
+
+section{
+
+background:white;
+border-radius:14px;
+padding:22px;
+margin-bottom:22px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+transition:0.2s;
+
+}
+
+section:hover{
+
+transform:translateY(-2px);
+
+}
+
+
+/* =========================
+COULEURS PAR RUBRIQUE
+========================= */
+
+section:nth-of-type(1){
+border-left:8px solid var(--vert);
+}
+
+section:nth-of-type(2){
+border-left:8px solid var(--bleu);
+}
+
+section:nth-of-type(3){
+border-left:8px solid var(--orange);
+}
+
+section:nth-of-type(4){
+border-left:8px solid var(--violet);
+}
+
+section:nth-of-type(5){
+border-left:8px solid var(--rouge);
+}
+
+section:nth-of-type(6){
+border-left:8px solid var(--turquoise);
+}
+
+section:nth-of-type(7){
+border-left:8px solid var(--brun);
+}
+
+section:nth-of-type(8){
+border-left:8px solid var(--gris);
+}
+
+section:nth-of-type(9){
+border-left:8px solid var(--vert-clair);
+}
+
+section:nth-of-type(10){
+border-left:8px solid var(--bleu);
+}
+
+
+/* =========================
+FORMULAIRES
+========================= */
+
+label{
+
+display:block;
+margin-top:12px;
+font-weight:600;
+
+}
+
+input,
+select,
+textarea{
+
+width:100%;
+padding:10px;
+margin-top:6px;
+
+border-radius:8px;
+border:1px solid #ddd;
+
+font-size:14px;
+
+transition:0.2s;
+
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+
+border-color:var(--turquoise);
+outline:none;
+
+box-shadow:0 0 6px rgba(0,0,0,0.08);
+
+}
+
+textarea{
+
+min-height:90px;
+
+}
+
+
+/* =========================
+BOUTONS MODERNES
+========================= */
+
+button{
+
+background:linear-gradient(135deg,var(--vert),var(--turquoise));
+
+border:none;
+color:white;
+
+padding:11px 20px;
+
+border-radius:8px;
+
+margin-top:14px;
+
+font-size:14px;
+
+cursor:pointer;
+
+transition:0.2s;
+
+}
+
+button:hover{
+
+transform:scale(1.04);
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+
+}
+
+
+/* =========================
+CARTE LEAFLET
+========================= */
+
+#map{
+
+height:420px;
+margin-top:10px;
+border-radius:10px;
+border:1px solid #ddd;
+
+}
+
+
+/* =========================
+GRAPH ALTITUDE
+========================= */
+
+canvas{
+
+margin-top:20px;
+max-height:320px;
+
+}
+
+
+/* =========================
+METEO
+========================= */
+
+#meteoRando{
+
+background:#f0f7ff;
+padding:10px;
+border-radius:8px;
+
+}
+
+#meteoRando p{
+
+margin:4px 0;
+font-size:15px;
+
+}
+
+
+/* =========================
+RESULTATS CALCULS
+========================= */
+
+span{
+
+font-weight:600;
+color:#2c3e50;
+
+}
+
+
+/* =========================
+RESUME RANDO
+========================= */
+
+#resumeRando{
+
+background:#f7fafc;
+border-left:6px solid var(--vert);
+
+padding:16px;
+
+border-radius:8px;
+
+white-space:pre-wrap;
+
+font-size:14px;
+line-height:1.5;
+
+}
+
+
+/* =========================
+ANIMATION SECTIONS
+========================= */
+
+section{
+
+animation:fadein 0.5s;
+
+}
+
+@keyframes fadein{
+
+from{
+opacity:0;
+transform:translateY(8px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+
+/* =========================
+RESPONSIVE MOBILE
+========================= */
+
+@media (max-width:700px){
+
+body{
+
+padding:12px;
+
+}
+
+section{
+
+padding:16px;
+
+}
+
+#map{
+
+height:300px;
+
+}
+
+button{
+
+width:100%;
+
+}
+
+}
