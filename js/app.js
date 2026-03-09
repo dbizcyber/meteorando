@@ -35,7 +35,7 @@ champ.value = "";
 
 function gestionAutreParking(){
 
-const select = document.getElementById("parking");
+const select = document.getElementById("parkingCovoiturage");
 const champ = document.getElementById("nouveauParking");
 
 select.addEventListener("change", () => {
