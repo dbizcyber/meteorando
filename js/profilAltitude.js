@@ -156,8 +156,10 @@ hike.accuclimb
 document.getElementById("ibp").textContent =
 hike.ibp
 
-calculDuree(hike.totlengthkm)
+/* on ne recalcul PAS la durée ici */
+
 calculEffort(hike.ibp)
+
 }
 
 /* durée marche */
