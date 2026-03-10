@@ -111,16 +111,18 @@ return R*c
 
 }
 
-/* appel API IBP Supabase*/
+/* appel API IBP */
 
 async function calculIBP(file){
 
 const formData = new FormData()
 formData.append("file", file)
 
-const rep = await 
-fetch(
-"https://https://whlxbfnmyqdflmxosfse.supabase.co/functions/v1/dynamic-handler",
+const status = document.getElementById("gpx-status")
+if(status) status.textContent = "⏳ Analyse du fichier GPX en cours..."
+
+const rep = await fetch(
+"https://ibp-proxy.vercel.app/api/ibp",
 {
 method:"POST",
 body:formData
