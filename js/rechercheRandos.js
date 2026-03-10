@@ -2,28 +2,25 @@ import { randos } from "../data/randos.js";
 
 export function activerRecherche(){
 
-const champ = document.getElementById("rechercheRando");
-const select = document.getElementById("rando");
+const input = document.getElementById("rechercheRando")
+const select = document.getElementById("rando")
 
-champ.addEventListener("input", () => {
+if(!input || !select) return
 
-const texte = champ.value.toLowerCase();
+input.addEventListener("input", () => {
 
-select.innerHTML = "";
+const filtre = input.value.toLowerCase()
+const options = select.options
 
-randos
-.filter(r => r.toLowerCase().includes(texte))
-.forEach(r => {
+for(let i=0;i<options.length;i++){
 
-const option = document.createElement("option");
+const texte = options[i].text.toLowerCase()
 
-option.value = r;
-option.textContent = r;
+options[i].style.display =
+texte.includes(filtre) ? "" : "none"
 
-select.appendChild(option);
+}
 
-});
-
-});
+})
 
 }
