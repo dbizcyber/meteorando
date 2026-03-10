@@ -159,11 +159,11 @@ function calculEffort(ibp){
 
 let effort=""
 
-if(ibp < 50) effort="Facile"
-else if(ibp < 80) effort="Moyen"
-else if(ibp < 120) effort="Soutenu"
-else if(ibp < 160) effort="Difficile"
-else effort="Très difficile"
+if(ibp < 25) effort="1"
+else if(ibp < 50) effort="2"
+else if(ibp < 75) effort="3"
+else if(ibp < 100) effort="4"
+else effort="5"
 
 document.getElementById("effort").textContent = effort
 
