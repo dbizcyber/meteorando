@@ -1,10 +1,14 @@
 import { calculCovoiturage } from "./covoiturage.js"
 import { afficherMeteo } from "./meteoRando.js"
+
 const CHATEAURENARD = [43.88808,4.84882];
 
 let map
 let marker
 let routeLine
+
+
+/* INITIALISATION CARTE */
 
 export function initCarte(){
 
@@ -15,31 +19,32 @@ maxZoom:19
 }).addTo(map)
 
 marker = L.marker(CHATEAURENARD,{draggable:true}).addTo(map)
-  
+
 /* stockage coordonnées parking */
-window.coordsParking = [
-CHATEAURENARD[0],
-CHATEAURENARD[1]
-]
+
+window.coordsParking =
+CHATEAURENARD[0] + "," + CHATEAURENARD[1]
 
 calculRoute(CHATEAURENARD)
 afficherMeteo(CHATEAURENARD[0],CHATEAURENARD[1])
+
+
+/* déplacement marqueur */
 
 marker.on("dragend", () => {
 
 const pos = marker.getLatLng()
 
-/* stockage coordonnées */
-window.coordsParking = pos.lat + "," + pos.lng
-
 calculRoute([pos.lat,pos.lng])
-
 afficherMeteo(pos.lat,pos.lng)
+
 })
 
 }
 
-/* géocodage lieu */
+
+
+/* RECHERCHE LIEU */
 
 export function chercherLieu(){
 
@@ -51,21 +56,24 @@ fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${texte}`)
 
 .then(data=>{
 
-document.getElementById("parkingRandoAdresse").textContent =
-data[0].display_name
-
 if(!data.length) return
 
 const lat = parseFloat(data[0].lat)
 const lon = parseFloat(data[0].lon)
 
+/* adresse */
+
+document.getElementById("parkingRandoAdresse").textContent =
+data[0].display_name
+
 marker.setLatLng([lat,lon])
 
 map.setView([lat,lon],11)
-  
+
 /* stockage coordonnées */
+
 window.coordsParking = lat + "," + lon
-  
+
 calculRoute([lat,lon])
 afficherMeteo(lat,lon)
 
@@ -73,14 +81,17 @@ afficherMeteo(lat,lon)
 
 }
 
-/* calcul itinéraire routier */
-function majAdresse(lat, lon){
+
+
+/* REVERSE GEOCODING */
+
+function majAdresse(lat,lon){
 
 fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
 
-.then(r => r.json())
+.then(r=>r.json())
 
-.then(data => {
+.then(data=>{
 
 if(!data || !data.display_name) return
 
@@ -90,6 +101,11 @@ data.display_name
 })
 
 }
+
+
+
+/* CALCUL ITINERAIRE */
+
 function calculRoute(dest){
 
 const url =
@@ -103,9 +119,12 @@ fetch(url)
 
 .then(data=>{
 
+if(!data.routes || !data.routes.length) return
+
 const route = data.routes[0]
 
-  /* mise à jour GPS affiché */
+
+/* mise à jour GPS affiché */
 
 document.getElementById("latParking").textContent =
 dest[0].toFixed(5)
@@ -113,14 +132,17 @@ dest[0].toFixed(5)
 document.getElementById("lonParking").textContent =
 dest[1].toFixed(5)
 
-/* stockage coordonnées pour le résumé */
+
+/* stockage coordonnées résumé */
 
 window.coordsParking =
 dest[0].toFixed(5) + "," + dest[1].toFixed(5)
 
+
 /* mise à jour adresse */
 
 majAdresse(dest[0],dest[1])
+
 
 /* distance réelle */
 
@@ -132,7 +154,8 @@ document.getElementById("distanceAR").textContent = AR
 
 calculCovoiturage()
 
-/* tracé */
+
+/* tracé itinéraire */
 
 if(routeLine) map.removeLayer(routeLine)
 
