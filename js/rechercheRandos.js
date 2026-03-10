@@ -1,5 +1,3 @@
-import { randos } from "../data/randos.js";
-
 export function activerRecherche(){
 
 const input = document.getElementById("rechercheRando")
@@ -7,19 +5,41 @@ const select = document.getElementById("rando")
 
 if(!input || !select) return
 
+/* sauvegarde liste complète */
+
+const toutesRandos = [...select.options].map(o => o.value)
+
 input.addEventListener("input", () => {
 
 const filtre = input.value.toLowerCase()
-const options = select.options
 
-for(let i=0;i<options.length;i++){
+/* vider menu */
 
-const texte = options[i].text.toLowerCase()
+select.innerHTML = ""
 
-options[i].style.display =
-texte.includes(filtre) ? "" : "none"
+/* reconstruire */
+
+toutesRandos.forEach(rando => {
+
+if(rando.toLowerCase().includes(filtre)){
+
+const option = document.createElement("option")
+option.value = rando
+option.textContent = rando
+
+select.appendChild(option)
 
 }
+
+})
+
+})
+
+/* remplir Nom rando automatiquement */
+
+select.addEventListener("change", () => {
+
+document.getElementById("nomRando").value = select.value
 
 })
 
