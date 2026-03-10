@@ -11,6 +11,15 @@ document
 async function lireGPX(event){
 
 const file = event.target.files[0]
+
+if(!file) return
+
+/* appel API IBP */
+
+calculIBP(file)
+
+/* lecture GPX locale pour profil */
+
 const text = await file.text()
 
 const parser = new DOMParser()
@@ -46,11 +55,11 @@ slopes.push(pente)
 
 }
 
-calculDuree(totalDist)
-
 dessinerProfil(distances,altitudes,slopes)
 
 }
+
+/* distance haversine */
 
 function distance(lat1,lon1,lat2,lon2){
 
@@ -67,13 +76,59 @@ Math.sin(dLon/2)*Math.sin(dLon/2)
 const c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a))
 
 return R*c
+
 }
+
+/* appel API IBP */
+
+async function calculIBP(file){
+
+const key=document.getElementById("ibpKey").value
+
+if(!key) return
+
+const formData=new FormData()
+
+formData.append("key",key)
+formData.append("file",file)
+
+const rep=await fetch(
+"https://www.ibpindex.com/api/",
+{
+method:"POST",
+body:formData
+})
+
+const data=await rep.json()
+
+const hike=data.hiking
+
+/* affichage données */
+
+document.getElementById("distanceGPX").textContent=
+hike.totlengthkm
+
+document.getElementById("denivele").textContent=
+hike.accuclimb
+
+document.getElementById("ibp").textContent=
+hike.ibp
+
+/* calcul durée marche */
+
+calculDuree(hike.totlengthkm)
+
+}
+
+/* durée marche */
 
 function calculDuree(distanceKm){
 
 const vitesse=parseFloat(
 document.getElementById("vitesse").value
 )
+
+if(!vitesse) return
 
 const heures=distanceKm/vitesse
 
@@ -85,6 +140,8 @@ document.getElementById("dureeMarche").textContent=
 
 }
 
+/* couleur pente */
+
 function couleurPente(p){
 
 if(p>=20) return "rgb(200,0,0)"
@@ -93,6 +150,8 @@ if(p>=10) return "rgb(255,150,0)"
 return "rgb(255,220,0)"
 
 }
+
+/* profil altimétrique */
 
 function dessinerProfil(dist,alt,slopes){
 
@@ -125,6 +184,7 @@ tension:0
 
 options:{
 parsing:false,
+
 plugins:{
 tooltip:{
 callbacks:{
@@ -135,13 +195,9 @@ const alt=ctx.raw.y
 const pente=slopes[ctx.dataIndex].toFixed(1)
 
 return `Altitude ${alt} m | Dist ${d} km | pente ${pente}%`
-}
-}
-},
 
-title:{
-display:true,
-text:legende()
+}
+}
 }
 },
 
@@ -157,15 +213,5 @@ title:{display:true,text:"Altitude (m)"}
 
 }
 })
-
-}
-
-function legende(){
-
-const nom=document.getElementById("nomRando")?.value || ""
-const date=document.getElementById("dateRando")?.value || ""
-const anim=document.getElementById("animateur")?.value || ""
-
-return `${nom} - ${date} - ${anim}`
 
 }
