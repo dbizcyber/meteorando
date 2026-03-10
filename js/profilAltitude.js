@@ -83,7 +83,7 @@ return R*c
 
 async function calculIBP(file){
 
-const key=document.getElementById("ibpKey").value
+const key="ifwh7wlwykzixzxcg6rb"
 
 if(!key) return
 
