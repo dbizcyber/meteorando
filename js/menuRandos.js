@@ -4,6 +4,11 @@ export function remplirMenu() {
 
 const select = document.getElementById("rando");
 
+if(!select){
+console.error("select rando introuvable");
+return;
+}
+
 randos.forEach(r => {
 
 const option = document.createElement("option");
