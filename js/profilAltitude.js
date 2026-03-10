@@ -217,7 +217,10 @@ hArrivee -= 24
 /* affichage */
 
 document.getElementById("dureeMarcheSim").textContent =
-`${h}h${m} → arrivée ${hArrivee}h${mArrivee.toString().padStart(2,"0")}`
+`Durée marche : ${h}h${m}`
+
+document.getElementById("heureArriveeSim").textContent =
+`Arrivée estimée : ${hArrivee}h${mArrivee.toString().padStart(2,"0")}`
 
 }
 /* calcul Effort */
