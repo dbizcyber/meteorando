@@ -15,6 +15,8 @@ maxZoom:19
 }).addTo(map)
 
 marker = L.marker(CHATEAURENARD,{draggable:true}).addTo(map)
+/* stockage coordonnées parking */
+window.coordsParking = CHATEAURENARD[0] + "," + CHATEAURENARD[1]
 
 calculRoute(CHATEAURENARD)
 afficherMeteo(CHATEAURENARD[0],CHATEAURENARD[1])
@@ -22,6 +24,9 @@ afficherMeteo(CHATEAURENARD[0],CHATEAURENARD[1])
 marker.on("dragend", () => {
 
 const pos = marker.getLatLng()
+
+/* stockage coordonnées */
+window.coordsParking = pos.lat + "," + pos.lng
 
 calculRoute([pos.lat,pos.lng])
 
@@ -50,7 +55,10 @@ const lon = parseFloat(data[0].lon)
 marker.setLatLng([lat,lon])
 
 map.setView([lat,lon],11)
-
+  
+/* stockage coordonnées */
+window.coordsParking = lat + "," + lon
+  
 calculRoute([lat,lon])
 afficherMeteo(lat,lon)
 
