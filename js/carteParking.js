@@ -55,7 +55,7 @@ document.getElementById("parkingRandoAdresse").textContent =
 data[0].display_name
 
 if(!data.length) return
-
+exploiterIBP
 const lat = parseFloat(data[0].lat)
 const lon = parseFloat(data[0].lon)
 
@@ -117,6 +117,11 @@ dest[1].toFixed(5)
 
 window.coordsParking =
 dest[0].toFixed(5) + "," + dest[1].toFixed(5)
+
+/* mise à jour adresse */
+
+majAdresse(dest[0],dest[1])
+
 /* distance réelle */
 
 const distanceKm = route.distance / 1000
