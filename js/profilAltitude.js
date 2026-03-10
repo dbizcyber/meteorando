@@ -1,5 +1,13 @@
 let chartProfil
 
+export function initProfilGPX(){
+
+document
+.getElementById("gpxFile")
+.addEventListener("change", lireGPX)
+
+}
+/* recalcul simulation si paramètres changent */
 document
 .getElementById("vitesse")
 .addEventListener("input", recalculSimulation)
