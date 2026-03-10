@@ -132,7 +132,7 @@ document.getElementById("ibp").textContent =
 hike.ibp
 
 calculDuree(hike.totlengthkm)
-
+calculEffort(hike.ibp)
 }
 
 /* durée marche */
