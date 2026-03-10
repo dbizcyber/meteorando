@@ -28,7 +28,8 @@ const trajet = val("itineraire","Non renseigné")
 
 const km = txt("distanceAR")
 
-const parkingRando = txt("parkingRandoAdresse")
+const parkingRando =
+document.getElementById("parkingRandoAdresse")?.textContent.trim() || "Non renseigné"
 
 const coutKm = txt("coutKm")
 const coutAutoroute = val("autoroute","0")
