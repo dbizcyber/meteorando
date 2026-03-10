@@ -1,4 +1,4 @@
-console.log("app.js chargé");
+console.log("APP JS DEMARRE");
 import { remplirMenu } from "./menuRandos.js";
 import { activerRecherche } from "./rechercheRandos.js";
 import { initHoraires } from "./horairesRando.js";
