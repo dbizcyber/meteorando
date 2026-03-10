@@ -53,6 +53,8 @@ const dist = distance(lat1,lon1,lat2,lon2)
 
 totalDist+=dist
 
+if(dist===0) continue
+
 const pente=((ele2-ele1)/(dist*1000))*100
 
 distances.push(totalDist)
@@ -89,38 +91,45 @@ return R*c
 
 async function calculIBP(file){
 
-const key="ifwh7wlwykzixzxcg6rb"
+const formData = new FormData()
+formData.append("file", file)
 
-if(!key) return
+const status = document.getElementById("gpx-status")
+if(status) status.textContent = "⏳ Analyse du fichier GPX en cours..."
 
-const formData=new FormData()
-
-formData.append("key",key)
-formData.append("file",file)
-
-const rep=await fetch(
-"https://www.ibpindex.com/api/",
+const rep = await fetch(
+"https://ibp-proxy.vercel.app/api/ibp",
 {
 method:"POST",
 body:formData
 })
 
-const data=await rep.json()
+const data = await rep.json()
 
-const hike=data.hiking
+exploiterIBP(data)
+
+window.gpxImporte = true
+
+if(status) status.textContent = "✅ GPX analysé avec succès"
+
+}
 
 /* affichage données */
 
-document.getElementById("distanceGPX").textContent=
+function exploiterIBP(data){
+
+if(!data || !data.hiking) return
+
+const hike = data.hiking
+
+document.getElementById("distanceGPX").textContent =
 hike.totlengthkm
 
-document.getElementById("denivele").textContent=
+document.getElementById("denivele").textContent =
 hike.accuclimb
 
-document.getElementById("ibp").textContent=
+document.getElementById("ibp").textContent =
 hike.ibp
-
-/* calcul durée marche */
 
 calculDuree(hike.totlengthkm)
 
