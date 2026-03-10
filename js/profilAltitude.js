@@ -6,6 +6,20 @@ document
 .getElementById("gpxFile")
 .addEventListener("change", lireGPX)
 
+/* recalcul si la vitesse change */
+
+document
+.getElementById("vitesse")
+.addEventListener("input", ()=>{
+
+const dist = parseFloat(
+document.getElementById("distanceGPX").textContent
+)
+
+if(dist) calculDuree(dist)
+
+})
+
 }
 
 async function lireGPX(event){
