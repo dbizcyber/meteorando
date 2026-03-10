@@ -15,8 +15,12 @@ maxZoom:19
 }).addTo(map)
 
 marker = L.marker(CHATEAURENARD,{draggable:true}).addTo(map)
+  
 /* stockage coordonnées parking */
-window.coordsParking = CHATEAURENARD[0] + "," + CHATEAURENARD[1]
+window.coordsParking = [
+CHATEAURENARD[0],
+CHATEAURENARD[1]
+]
 
 calculRoute(CHATEAURENARD)
 afficherMeteo(CHATEAURENARD[0],CHATEAURENARD[1])
