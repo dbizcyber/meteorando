@@ -5,27 +5,21 @@ const select = document.getElementById("rando")
 
 if(!input || !select) return
 
-const options = Array.from(select.options)
-
-input.addEventListener("input", () => {
+input.addEventListener("input", function(){
 
 const filtre = input.value.toLowerCase()
 
-select.innerHTML = ""
+for(const option of select.options){
 
-options.forEach(opt => {
+const texte = option.text.toLowerCase()
 
-if(opt.text.toLowerCase().includes(filtre)){
-
-select.appendChild(opt.cloneNode(true))
+option.hidden = !texte.includes(filtre)
 
 }
 
 })
 
-})
-
-/* remplir automatiquement Nom rando */
+/* remplir automatiquement le nom */
 
 select.addEventListener("change", () => {
 
