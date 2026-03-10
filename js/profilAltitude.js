@@ -65,6 +65,9 @@ slopes.push(pente)
 
 dessinerProfil(distances,altitudes,slopes)
 
+/* calcul temps marche avec distance GPX locale */
+
+calculDuree(totalDist)
 }
 
 /* distance haversine */
