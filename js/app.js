@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 remplirMenu();
 activerRecherche();
+  console.log("recherche activée");
 initHoraires();
 
 /* animateurs */
