@@ -2,7 +2,7 @@ export function activerRecherche(){
 
 const input = document.getElementById("rechercheRando")
 const select = document.getElementById("rando")
-
+console.log("Nombre de randonnées :", select.options.length)
 if(!input || !select) return
 
 input.addEventListener("input", function(){
