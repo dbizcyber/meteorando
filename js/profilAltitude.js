@@ -301,11 +301,52 @@ tooltip:{
 callbacks:{
 label:function(ctx){
 
-const d=ctx.raw.x.toFixed(2)
-const alt=ctx.raw.y
-const pente=slopes[ctx.dataIndex].toFixed(1)
+const distance = ctx.raw.x
+const altitude = ctx.raw.y
+const pente = slopes[ctx.dataIndex].toFixed(1)
 
-return `Altitude ${alt} m | Dist ${d} km | pente ${pente}%`
+/* récupération paramètres */
+
+const vitesse = parseFloat(
+document.getElementById("vitesse").value
+)
+
+const heureDepart =
+document.getElementById("heureDepartMarche").value
+
+let heurePoint=""
+
+/* calcul heure simulée au point */
+
+if(vitesse && heureDepart){
+
+const temps = distance / vitesse
+
+const h = Math.floor(temps)
+const m = Math.round((temps-h)*60)
+
+const parts = heureDepart.split(":")
+let hDepart = parseInt(parts[0])
+let mDepart = parseInt(parts[1])
+
+let hPoint = hDepart + h
+let mPoint = mDepart + m
+
+if(mPoint >= 60){
+mPoint -= 60
+hPoint++
+}
+
+if(hPoint >= 24){
+hPoint -= 24
+}
+
+heurePoint = ` | heure ${hPoint}h${mPoint.toString().padStart(2,"0")}`
+}
+
+/* texte tooltip */
+
+return `Altitude ${altitude} m | Dist ${distance.toFixed(2)} km | pente ${pente}%${heurePoint}`
 
 }
 }
