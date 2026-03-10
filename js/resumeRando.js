@@ -32,10 +32,6 @@ const km = txt("distanceAR")
 
 const parkingRando = txt("parkingRandoAdresse")
 
-const gps = window.coordsParking
-? window.coordsParking.join(",")
-: ""
-
 const coutKm = txt("coutKm")
 const coutAutoroute = val("autoroute","0")
 const coutTotal = txt("coutTotal")
