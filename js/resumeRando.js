@@ -7,10 +7,8 @@ document
 }
 
 function genererResume(){
-
-  const gps = window.coordsParking
-? window.coordsParking.join(",")
-: ""
+  
+const gps = window.coordsParking || ""
 console.log("GPS résumé =", gps)
   
 const nom = val("nomRando","Non renseigné")
