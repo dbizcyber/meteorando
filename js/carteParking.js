@@ -51,6 +51,9 @@ fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${texte}`)
 
 .then(data=>{
 
+document.getElementById("parkingRandoAdresse").textContent =
+data[0].display_name
+
 if(!data.length) return
 
 const lat = parseFloat(data[0].lat)
@@ -87,6 +90,18 @@ fetch(url)
 
 const route = data.routes[0]
 
+  /* mise à jour GPS affiché */
+
+document.getElementById("latParking").textContent =
+dest[0].toFixed(5)
+
+document.getElementById("lonParking").textContent =
+dest[1].toFixed(5)
+
+/* stockage coordonnées pour le résumé */
+
+window.coordsParking =
+dest[0].toFixed(5) + "," + dest[1].toFixed(5)
 /* distance réelle */
 
 const distanceKm = route.distance / 1000
