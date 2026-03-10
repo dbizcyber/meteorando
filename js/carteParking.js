@@ -1,9 +1,3 @@
-export function initCarte(){
-
-console.log("initCarte exécuté");
-
-map = L.map("map").setView(CHATEAURENARD,10)
-  
 import { calculCovoiturage } from "./covoiturage.js"
 import { afficherMeteo } from "./meteoRando.js"
 const CHATEAURENARD = [43.88808,4.84882];
