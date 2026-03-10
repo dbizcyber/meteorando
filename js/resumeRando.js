@@ -8,6 +8,11 @@ document
 
 function genererResume(){
 
+  const gps = window.coordsParking
+? window.coordsParking.join(",")
+: ""
+console.log("GPS résumé =", gps)
+  
 const nom = val("nomRando","Non renseigné")
 const date = val("dateRando","--")
 const meteo = txt("meteoEtat")
