@@ -173,10 +173,24 @@ document.getElementById("effort").textContent = effort
 
 function couleurPente(p){
 
-if(p>=20) return "rgb(200,0,0)"
-if(p>=15) return "rgb(255,80,0)"
-if(p>=10) return "rgb(255,150,0)"
-return "rgb(255,220,0)"
+/* montées */
+
+if(p >= 20) return "rgb(200,0,0)"
+if(p >= 15) return "rgb(255,80,0)"
+if(p >= 10) return "rgb(255,150,0)"
+if(p >= 5)  return "rgb(255,200,0)"
+
+/* plat */
+
+if(p > -5) return "rgb(255,220,0)"
+
+/* descentes */
+
+if(p > -10) return "rgb(150,200,255)"
+if(p > -15) return "rgb(80,150,255)"
+if(p > -20) return "rgb(40,100,255)"
+
+return "rgb(0,60,200)"
 
 }
 
