@@ -154,7 +154,20 @@ document.getElementById("dureeMarche").textContent=
 `${h}h${m}`
 
 }
+/* calcul Effort */
+function calculEffort(ibp){
 
+let effort=""
+
+if(ibp < 50) effort="Facile"
+else if(ibp < 80) effort="Moyen"
+else if(ibp < 120) effort="Soutenu"
+else if(ibp < 160) effort="Difficile"
+else effort="Très difficile"
+
+document.getElementById("effort").textContent = effort
+
+}
 /* couleur pente */
 
 function couleurPente(p){
