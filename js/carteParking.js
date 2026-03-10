@@ -55,7 +55,7 @@ document.getElementById("parkingRandoAdresse").textContent =
 data[0].display_name
 
 if(!data.length) return
-exploiterIBP
+
 const lat = parseFloat(data[0].lat)
 const lon = parseFloat(data[0].lon)
 
