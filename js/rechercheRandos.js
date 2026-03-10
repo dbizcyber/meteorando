@@ -5,23 +5,27 @@ const select = document.getElementById("rando")
 
 if(!input || !select) return
 
+const options = Array.from(select.options)
+
 input.addEventListener("input", () => {
 
 const filtre = input.value.toLowerCase()
 
-const options = select.options
+select.innerHTML = ""
 
-for(let i=0;i<options.length;i++){
+options.forEach(opt => {
 
-const texte = options[i].text.toLowerCase()
+if(opt.text.toLowerCase().includes(filtre)){
 
-options[i].hidden = !texte.includes(filtre)
+select.appendChild(opt.cloneNode(true))
 
 }
 
 })
 
-/* remplir automatiquement le nom de la rando */
+})
+
+/* remplir automatiquement Nom rando */
 
 select.addEventListener("change", () => {
 
