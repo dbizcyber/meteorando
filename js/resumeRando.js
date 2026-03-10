@@ -51,9 +51,6 @@ const risque = val("risque","0")
 const remarques = val("remarques","Non renseigné")
 const animateur = val("animateur","❌ Non renseigné")
 
-const google =
-`https://www.google.com/maps?q=${lat},${lon}`
-
 const texte = `
 Feuille de route : ${formatDate(date)} — ${nom}
 
