@@ -5,37 +5,23 @@ const select = document.getElementById("rando")
 
 if(!input || !select) return
 
-/* sauvegarde liste complète */
-
-const toutesRandos = [...select.options].map(o => o.value)
-
 input.addEventListener("input", () => {
 
 const filtre = input.value.toLowerCase()
 
-/* vider menu */
+const options = select.options
 
-select.innerHTML = ""
+for(let i=0;i<options.length;i++){
 
-/* reconstruire */
+const texte = options[i].text.toLowerCase()
 
-toutesRandos.forEach(rando => {
-
-if(rando.toLowerCase().includes(filtre)){
-
-const option = document.createElement("option")
-option.value = rando
-option.textContent = rando
-
-select.appendChild(option)
+options[i].hidden = !texte.includes(filtre)
 
 }
 
 })
 
-})
-
-/* remplir Nom rando automatiquement */
+/* remplir automatiquement le nom de la rando */
 
 select.addEventListener("change", () => {
 
