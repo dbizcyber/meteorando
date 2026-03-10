@@ -1,3 +1,4 @@
+console.log("app.js chargé");
 import { remplirMenu } from "./menuRandos.js";
 import { activerRecherche } from "./rechercheRandos.js";
 import { initHoraires } from "./horairesRando.js";
