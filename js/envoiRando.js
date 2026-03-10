@@ -15,7 +15,7 @@ const emailUser =
 document.getElementById("emailUser").value
 
 const response = await fetch(
-"https://TON-PROJET.supabase.co/functions/v1/envoi-rando",
+"https://whlxbfnmyqdflmxosfse.supabase.co.supabase.co/functions/v1/envoi-rando",
 {
 method: "POST",
 headers:{
