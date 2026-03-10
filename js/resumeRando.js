@@ -27,8 +27,9 @@ const km = txt("distanceAR")
 
 const parkingRando = txt("parkingRandoAdresse")
 
-const lat = txt("latParking")
-const lon = txt("lonParking")
+const gps = window.coordsParking
+? window.coordsParking.join(",")
+: ""
 
 const coutKm = txt("coutKm")
 const coutAutoroute = val("autoroute","0")
@@ -69,11 +70,10 @@ Trajet suggéré: ${trajet}
 
 Kilométrage voiture A/R : ${km} km
 
-🏁 Parking de Départ de la randonnée : ${parkingRando}
+🏁 Parking départ randonnée : ${gps}
+📍 https://www.google.com/maps?q=${gps}
 
-📍 Lien Google Maps : ${google}
-
-📌 Coordonnées GPS : ${lat}, ${lon}
+📌 Coordonnées GPS : ${gps}
 
 Coût du Trajet : ${coutKm}
 Coût de l'Autoroute : ${coutAutoroute} €
