@@ -66,7 +66,7 @@ Trajet suggéré: ${trajet}
 
 Kilométrage voiture A/R : ${km} km
 
-🏁 Parking départ randonnée : ${parkingRando}
+🏁 Parking départ randonnée : ${parkingRandoAdresse}
 
 📍 Coordonnées GPS : ${gps}
 
