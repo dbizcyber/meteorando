@@ -67,7 +67,9 @@ Trajet suggéré: ${trajet}
 Kilométrage voiture A/R : ${km} km
 
 🏁 Parking départ randonnée : ${gps}
-📍 https://www.google.com/maps?q=${gps}
+📍 <a href="https://www.google.com/maps?q=${gps}" target="_blank">
+Voir sur Google Maps
+</a>
 
 📌 Coordonnées GPS : ${gps}
 
