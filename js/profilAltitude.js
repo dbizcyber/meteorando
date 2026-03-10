@@ -1,24 +1,20 @@
 let chartProfil
 
-export function initProfilGPX(){
-
-document
-.getElementById("gpxFile")
-.addEventListener("change", lireGPX)
-
-/* recalcul si la vitesse change */
-
 document
 .getElementById("vitesse")
-.addEventListener("input", ()=>{
+.addEventListener("input", recalculSimulation)
+
+document
+.getElementById("heureDepartMarche")
+.addEventListener("input", recalculSimulation)
+
+function recalculSimulation(){
 
 const dist = parseFloat(
 document.getElementById("distanceGPX").textContent
 )
 
-if(dist) calculDuree(dist)
-
-})
+if(dist) calculSimulation(dist)
 
 }
 
@@ -82,6 +78,9 @@ dessinerProfil(distances,altitudes,slopes)
 /* calcul temps marche avec distance GPX locale */
 
 calculDuree(totalDist)
+  
+/* calcul temps marche simulée */
+calculSimulation(totalDist) 
 }
 
 /* distance haversine */
@@ -170,6 +169,47 @@ const m=Math.round((heures-h)*60)
 
 document.getElementById("dureeMarche").textContent=
 `${h}h${m}`
+
+}
+function calculSimulation(distanceKm){
+
+const vitesse = parseFloat(
+document.getElementById("vitesse").value
+)
+
+const heureDepart = document.getElementById("heureDepartMarche").value
+
+if(!vitesse || !heureDepart) return
+
+const heures = distanceKm / vitesse
+
+const h = Math.floor(heures)
+const m = Math.round((heures-h)*60)
+
+/* heure départ */
+
+const parts = heureDepart.split(":")
+let hDepart = parseInt(parts[0])
+let mDepart = parseInt(parts[1])
+
+/* ajout durée */
+
+let hArrivee = hDepart + h
+let mArrivee = mDepart + m
+
+if(mArrivee >= 60){
+mArrivee -= 60
+hArrivee += 1
+}
+
+if(hArrivee >= 24){
+hArrivee -= 24
+}
+
+/* affichage */
+
+document.getElementById("dureeMarcheSim").textContent =
+`${h}h${m} → arrivée ${hArrivee}h${mArrivee.toString().padStart(2,"0")}`
 
 }
 /* calcul Effort */
