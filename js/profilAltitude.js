@@ -37,13 +37,19 @@ for(let i=1;i<points.length;i++){
 
 const lat1=parseFloat(points[i-1].getAttribute("lat"))
 const lon1=parseFloat(points[i-1].getAttribute("lon"))
-const ele1=parseFloat(points[i-1].getElementsByTagName("ele")[0].textContent)
 
 const lat2=parseFloat(points[i].getAttribute("lat"))
 const lon2=parseFloat(points[i].getAttribute("lon"))
-const ele2=parseFloat(points[i].getElementsByTagName("ele")[0].textContent)
 
-const dist=distance(lat1,lon1,lat2,lon2)
+const e1 = points[i-1].getElementsByTagName("ele")[0]
+const e2 = points[i].getElementsByTagName("ele")[0]
+
+if(!e1 || !e2) continue
+
+const ele1 = parseFloat(e1.textContent)
+const ele2 = parseFloat(e2.textContent)
+
+const dist = distance(lat1,lon1,lat2,lon2)
 
 totalDist+=dist
 
