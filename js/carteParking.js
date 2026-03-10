@@ -74,7 +74,22 @@ afficherMeteo(lat,lon)
 }
 
 /* calcul itinéraire routier */
+function majAdresse(lat, lon){
 
+fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+
+.then(r => r.json())
+
+.then(data => {
+
+if(!data || !data.display_name) return
+
+document.getElementById("parkingRandoAdresse").textContent =
+data.display_name
+
+})
+
+}
 function calculRoute(dest){
 
 const url =
