@@ -1,6 +1,6 @@
 import { calculCovoiturage } from "./covoiturage.js"
 import { afficherMeteo } from "./meteoRando.js"
-const CHATEAURENARD = [43.88808,4.84882;
+const CHATEAURENARD = [43.88808,4.84882];
 
 let map
 let marker
