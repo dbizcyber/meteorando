@@ -66,12 +66,12 @@ Trajet suggéré: ${trajet}
 
 Kilométrage voiture A/R : ${km} km
 
-🏁 Parking départ randonnée : ${gps}
-📍 <a href="https://www.google.com/maps?q=${gps}" target="_blank">
-Voir sur Google Maps
-</a>
+🏁 Parking départ randonnée : ${parkingRando}
 
-📌 Coordonnées GPS : ${gps}
+📍 Coordonnées GPS : ${gps}
+
+📍 Google Maps :
+https://www.google.com/maps?q=${gps}
 
 Coût du Trajet : ${coutKm}
 Coût de l'Autoroute : ${coutAutoroute} €
