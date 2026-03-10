@@ -104,7 +104,8 @@ method:"POST",
 body:formData
 })
 
-const data = await rep.json()
+const text = await rep.text()
+const data = JSON.parse(text)
 
 exploiterIBP(data)
 
