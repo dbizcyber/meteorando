@@ -15,6 +15,9 @@ async function envoyerRando() {
 
     const emailUser =
       document.getElementById("emailUser").value
+    
+console.log("resume:", resume)
+console.log("email:", emailUser)
 
     const response = await fetch(
       "https://whlxbfnmyqdflmxosfse.supabase.co/functions/v1/dynamic-handler",
