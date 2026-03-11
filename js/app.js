@@ -15,7 +15,7 @@ import { initResume } from "./resumeRando.js";
 import { initEnvoi } from "./envoiRando.js";
 
 /* -----------------------------
-   CHARGEMENT RANDOS SUPABASE
+   AUTOCOMPLETION RANDOS
 --------------------------------*/
 
 let randos = []
@@ -26,20 +26,57 @@ const url="https://whlxbfnmyqdflmxosfse.supabase.co/rest/v1/randos_lst?select=re
 
 const key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndobHhiZm5teXFkZmxteG9zZnNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3ODA5MTksImV4cCI6MjA4ODM1NjkxOX0.vf3sdnJRnnXyIx998fhPSIUPX0WS7KqDbvAwesCzOcE"
 
-const res = await fetch(url,{
-headers:{apikey:key}
-})
+try{
 
+const res = await fetch(url,{headers:{apikey:key}})
 const data = await res.json()
 
 randos = data.map(r=>{
-
 const premiereLigne = r.resume.split("\n")[0]
+return { nom: premiereLigne }
+})
 
-return {
-nom: premiereLigne,
-resume: r.resume
+}catch(e){
+console.error("Erreur chargement randos",e)
 }
+
+}
+
+function activerAutocompleteRandos(){
+
+const input = document.getElementById("rechercheRando")
+const suggestions = document.getElementById("suggestions")
+const champNom = document.getElementById("nomRando")
+
+if(!input || !suggestions || !champNom) return
+
+input.addEventListener("input", ()=>{
+
+const texte = input.value.toLowerCase()
+
+suggestions.innerHTML=""
+
+if(texte.length < 2) return
+
+const filtres = randos.filter(r =>
+r.nom.toLowerCase().includes(texte)
+)
+
+filtres.slice(0,10).forEach(r=>{
+
+const div=document.createElement("div")
+div.className="suggestion"
+div.textContent=r.nom
+
+div.onclick=()=>{
+champNom.value=r.nom
+input.value=r.nom
+suggestions.innerHTML=""
+}
+
+suggestions.appendChild(div)
+
+})
 
 })
 
@@ -92,58 +129,20 @@ champ.value = "";
 }
 
 /* -----------------------------
-   INITIALISATION PRINCIPALE
+   INITIALISATION
 --------------------------------*/
 
 document.addEventListener("DOMContentLoaded", async () => {
 
+/* charger randos autocomplete */
+
 await chargerRandos()
+activerAutocompleteRandos()
 
-/* recherche rando */
-
-const inputRando = document.getElementById("rechercheRando")
-const suggestions = document.getElementById("suggestions")
-const nomRando = document.getElementById("nomRando")
-
-inputRando.addEventListener("input", () => {
-
-const texte = inputRando.value.toLowerCase()
-
-suggestions.innerHTML=""
-
-if(texte.length < 2) return
-
-const filtres = randos.filter(r =>
-r.nom.toLowerCase().includes(texte)
-)
-
-filtres.slice(0,10).forEach(r=>{
-
-const div=document.createElement("div")
-
-div.className="suggestion"
-div.textContent=r.nom
-
-div.onclick=()=>{
-
-nomRando.value=r.nom
-inputRando.value=r.nom
-suggestions.innerHTML=""
-
-}
-
-suggestions.appendChild(div)
-
-})
-
-})
-
-/* randos */
+/* randos existantes */
 
 remplirMenu()
 activerRecherche()
-console.log("recherche activée")
-
 initHoraires()
 
 /* animateurs */
@@ -174,9 +173,12 @@ document
 initGPX()
 initProfilGPX()
 
-/* résumé + envoi */
+/* résumé */
 
 initResume()
+
+/* envoi */
+
 initEnvoi()
 
 })
