@@ -20,6 +20,7 @@ const response = await fetch(
 method: "POST",
 headers:{
 "Content-Type":"application/json"
+"apikey": "TA_SUPABASE_ANON_KEY"
 },
 body: JSON.stringify({
 
