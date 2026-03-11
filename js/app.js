@@ -1,4 +1,5 @@
 console.log("APP JS DEMARRE");
+
 import { remplirMenu } from "./menuRandos.js";
 import { activerRecherche } from "./rechercheRandos.js";
 import { initHoraires } from "./horairesRando.js";
@@ -13,13 +14,17 @@ import { afficherMeteo } from "./meteoRando.js";
 import { initResume } from "./resumeRando.js";
 import { initEnvoi } from "./envoiRando.js";
 
+/* -----------------------------
+   CHARGEMENT RANDOS SUPABASE
+--------------------------------*/
+
 let randos = []
 
 async function chargerRandos(){
 
 const url="https://whlxbfnmyqdflmxosfse.supabase.co/rest/v1/randos_lst?select=resume"
 
-const key="TON_ANON_KEY"
+const key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndobHhiZm5teXFkZmxteG9zZnNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3ODA5MTksImV4cCI6MjA4ODM1NjkxOX0.vf3sdnJRnnXyIx998fhPSIUPX0WS7KqDbvAwesCzOcE"
 
 const res = await fetch(url,{
 headers:{apikey:key}
@@ -40,7 +45,62 @@ resume: r.resume
 
 }
 
-chargerRandos()
+/* -----------------------------
+   AUTRE ANIMATEUR
+--------------------------------*/
+
+function gestionAutreAnimateur(){
+
+const select = document.getElementById("animateur");
+const champ = document.getElementById("nouvelAnimateur");
+
+select.addEventListener("change", () => {
+
+if(select.value.startsWith("Autre")){
+champ.style.display = "block";
+champ.focus();
+}else{
+champ.style.display = "none";
+champ.value = "";
+}
+
+});
+
+}
+
+/* -----------------------------
+   AUTRE PARKING
+--------------------------------*/
+
+function gestionAutreParking(){
+
+const select = document.getElementById("parkingCovoiturage");
+const champ = document.getElementById("nouveauParking");
+
+select.addEventListener("change", () => {
+
+if(select.value.startsWith("Autre")){
+champ.style.display = "block";
+champ.focus();
+}else{
+champ.style.display = "none";
+champ.value = "";
+}
+
+});
+
+}
+
+/* -----------------------------
+   INITIALISATION PRINCIPALE
+--------------------------------*/
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+await chargerRandos()
+
+/* recherche rando */
+
 const inputRando = document.getElementById("rechercheRando")
 const suggestions = document.getElementById("suggestions")
 const nomRando = document.getElementById("nomRando")
@@ -62,7 +122,6 @@ filtres.slice(0,10).forEach(r=>{
 const div=document.createElement("div")
 
 div.className="suggestion"
-
 div.textContent=r.nom
 
 div.onclick=()=>{
@@ -78,87 +137,46 @@ suggestions.appendChild(div)
 })
 
 })
-function gestionAutreAnimateur(){
-
-const select = document.getElementById("animateur");
-const champ = document.getElementById("nouvelAnimateur");
-
-select.addEventListener("change", () => {
-
-if(select.value.startsWith("Autre")){
-champ.style.display = "block";
-champ.focus();
-}else{
-champ.style.display = "none";
-champ.value = "";
-}
-
-});
-
-}
-
-function gestionAutreParking(){
-
-const select = document.getElementById("parkingCovoiturage");
-const champ = document.getElementById("nouveauParking");
-
-select.addEventListener("change", () => {
-
-if(select.value.startsWith("Autre")){
-champ.style.display = "block";
-champ.focus();
-}else{
-champ.style.display = "none";
-champ.value = "";
-}
-
-});
-
-}
-
-
-document.addEventListener("DOMContentLoaded", () => {
 
 /* randos */
 
-remplirMenu();
-activerRecherche();
-  console.log("recherche activée");
-initHoraires();
+remplirMenu()
+activerRecherche()
+console.log("recherche activée")
+
+initHoraires()
 
 /* animateurs */
 
-remplirMenuAnimateurs();
+remplirMenuAnimateurs()
+gestionAutreAnimateur()
 
-gestionAutreAnimateur();
+/* parkings */
 
-/* parkings covoiturage */
-gestionAutreParking();
+gestionAutreParking()
 
-/* carte parking rando */
+/* carte */
 
-initCarte();
+initCarte()
 
 document
 .getElementById("btnGeocoder")
-.addEventListener("click", chercherLieu);
+.addEventListener("click", chercherLieu)
 
-/* météo */
-
-/* cout covoiturage */
+/* covoiturage */
 
 document
 .getElementById("autoroute")
-.addEventListener("input", calculCovoiturage);
+.addEventListener("input", calculCovoiturage)
 
 /* gpx */
 
-initGPX();
-initProfilGPX();
+initGPX()
+initProfilGPX()
 
 /* résumé + envoi */
 
-initResume();
-initEnvoi();
+initResume()
+initEnvoi()
 
-});
+})
