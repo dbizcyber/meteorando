@@ -61,13 +61,17 @@ white-space:pre-wrap;
 
 </style>
 
+
 <div class="searchBox">
 <input id="search" placeholder="🔍 rechercher un village ou une rando">
 <span>🔍</span>
 </div>
 
 <div id="liste"></div>
+
+
 <script>
+
 const url="https://whlxbfnmyqdflmxosfse.supabase.co/rest/v1/randos_lst"
 
 const key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndobHhiZm5teXFkZmxteG9zZnNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3ODA5MTksImV4cCI6MjA4ODM1NjkxOX0.vf3sdnJRnnXyIx998fhPSIUPX0WS7KqDbvAwesCzOcE"
@@ -95,19 +99,16 @@ const bloc=document.createElement("div")
 
 const lignes=r.resume.split("\n")
 
-// premières lignes visibles
 const titre=document.createElement("div")
 titre.className="titre"
 titre.textContent=lignes.slice(0,3).join("\n")
 
-// fiche complète
 const pre=document.createElement("pre")
 pre.textContent=r.resume
 pre.style.display="none"
 
-// clic ouvrir / fermer
 titre.onclick=()=>{
-pre.style.display=
+pre.style.display =
 pre.style.display==="none" ? "block" : "none"
 }
 
