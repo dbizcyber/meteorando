@@ -1,12 +1,52 @@
 <style>
 
+body{
+font-family:Arial;
+margin:30px;
+}
+
+/* zone recherche moderne */
+
+.searchBox{
+position:relative;
+max-width:400px;
+margin-bottom:25px;
+}
+
+.searchBox input{
+width:100%;
+padding:12px 40px 12px 15px;
+border-radius:25px;
+border:1px solid #ccc;
+font-size:16px;
+outline:none;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+transition:0.2s;
+}
+
+.searchBox input:focus{
+border-color:#4CAF50;
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
+
+.searchBox span{
+position:absolute;
+right:12px;
+top:50%;
+transform:translateY(-50%);
+font-size:18px;
+opacity:0.6;
+}
+
+/* randos */
+
 pre{
 white-space: pre-wrap;
 font-family: Arial;
-background: #f6f6f6;
-padding: 12px;
-border-radius: 6px;
-margin-bottom: 20px;
+background:#f6f6f6;
+padding:12px;
+border-radius:6px;
+margin-bottom:20px;
 }
 
 .titre{
@@ -21,12 +61,13 @@ white-space:pre-wrap;
 
 </style>
 
-<input id="search" placeholder="chercher village">
+<div class="searchBox">
+<input id="search" placeholder="🔍 rechercher un village ou une rando">
+<span>🔍</span>
+</div>
 
 <div id="liste"></div>
-
 <script>
-
 const url="https://whlxbfnmyqdflmxosfse.supabase.co/rest/v1/randos_lst"
 
 const key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndobHhiZm5teXFkZmxteG9zZnNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3ODA5MTksImV4cCI6MjA4ODM1NjkxOX0.vf3sdnJRnnXyIx998fhPSIUPX0WS7KqDbvAwesCzOcE"
