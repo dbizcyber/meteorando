@@ -110,12 +110,12 @@ async function load(q = "") {
     pre.style.display = "none";
 
     let img = null;
-    if (r.profil) {
-      img = document.createElement("img");
-      img.className = "profilRando";
-      img.src = bucket + encodeURIComponent(r.profil);
-      img.style.display = "none";
-    }
+if (r.profil) {
+  img = document.createElement("img");
+  img.className = "profilRando";
+  img.src = r.profil;   // <-- juste l'URL du champ, pas de bucket ajouté
+  img.style.display = "none";
+}
 
     titre.onclick = () => {
       const ouvert = pre.style.display === "block";
