@@ -113,7 +113,7 @@ async function load(q = "") {
     if (r.profil) {
       img = document.createElement("img");
       img.className = "profilRando";
-      img.src = bucket + r.profil;
+      img.src = bucket + encodeURIComponent(r.profil);
       img.style.display = "none";
     }
 
