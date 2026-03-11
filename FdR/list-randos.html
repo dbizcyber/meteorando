@@ -78,34 +78,45 @@ placeholder="Rechercher un village, une rando, un terme spécifique">
 
 <script>
 
-const url="https://whlxbfnmyqdflmxosfse.supabase.co/rest/v1/randos_lst"
+const url="https://whlxbfnmyqdflmxosfse.supabase.co/rest/v1/randos"
 
 const key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndobHhiZm5teXFkZmxteG9zZnNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3ODA5MTksImV4cCI6MjA4ODM1NjkxOX0.vf3sdnJRnnXyIx998fhPSIUPX0WS7KqDbvAwesCzOcE"
-
+const bucket="https://whlxbfnmyqdflmxosfse.supabase.co/storage/v1/object/public/Courbe/"
 
 async function load(q=""){
 
-let query=url
+let query=url+"?select=resume,profil"
 
 if(q){
 
-query += `?resume=ilike.*${q}*`
+query += `&resume=ilike.*${q}*`
 
 }
 
-const res=await fetch(query,{
+const res = await fetch(query,{
 headers:{
-apikey:key
+apikey:key,
+Authorization:`Bearer ${key}`,
+"Content-Type":"application/json"
 }
 })
 
 const data=await res.json()
+console.log(data)
 
 const container=document.getElementById("liste")
 
 container.innerHTML=""
 
 data.forEach(r=>{
+	let img=null
+
+if(r.profil){
+img=document.createElement("img")
+img.src=bucket+r.profil
+img.style.maxWidth="600px"
+img.style.display="none"
+}
 
 const bloc=document.createElement("div")
 
@@ -125,15 +136,19 @@ pre.style.display="none"
 
 titre.onclick=()=>{
 
-pre.style.display =
-pre.style.display==="none"
-? "block"
-: "none"
+const ouvert = pre.style.display==="block"
+
+pre.style.display = ouvert ? "none" : "block"
+
+if(img){
+img.style.display = ouvert ? "none" : "block"
+}
 
 }
 
 bloc.appendChild(titre)
 
+if(img) bloc.appendChild(img)
 bloc.appendChild(pre)
 
 container.appendChild(bloc)
