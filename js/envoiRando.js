@@ -5,19 +5,28 @@ export function initEnvoi() {
     .addEventListener("click", envoyerRando)
 
 }
-
 async function envoyerRando() {
 
   try {
 
     const resume =
-      document.getElementById("resumeRando").textContent
+      document.getElementById("resumeRando").textContent.trim()
 
     const emailUser =
-      document.getElementById("emailUser").value
-    
-console.log("resume:", resume)
-console.log("email:", emailUser)
+      document.getElementById("emailUser").value.trim()
+
+    if (!resume) {
+      alert("Veuillez générer le résumé avant l'envoi")
+      return
+    }
+
+    if (!emailUser) {
+      alert("Veuillez saisir un email")
+      return
+    }
+
+    console.log("resume:", resume)
+    console.log("email:", emailUser)
 
     const response = await fetch(
       "https://whlxbfnmyqdflmxosfse.supabase.co/functions/v1/dynamic-handler",
