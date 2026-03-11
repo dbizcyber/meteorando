@@ -15,7 +15,7 @@ const emailUser =
 document.getElementById("emailUser").value
 
 const response = await fetch(
-"https://whlxbfnmyqdflmxosfse.supabase.co.supabase.co/functions/v1/envoi-rando",
+"https://https://whlxbfnmyqdflmxosfse.supabase.co/functions/v1/envoi-rando",
 {
 method: "POST",
 headers:{
