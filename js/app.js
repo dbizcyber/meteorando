@@ -1,5 +1,3 @@
-console.log("APP JS DEMARRE");
-
 import { remplirMenu } from "./menuRandos.js";
 import { activerRecherche } from "./rechercheRandos.js";
 import { initHoraires } from "./horairesRando.js";
@@ -14,77 +12,6 @@ import { afficherMeteo } from "./meteoRando.js";
 import { initResume } from "./resumeRando.js";
 import { initEnvoi } from "./envoiRando.js";
 
-/* -----------------------------
-   AUTOCOMPLETION RANDOS
---------------------------------*/
-
-let randos = []
-
-async function chargerRandos(){
-
-const url="https://whlxbfnmyqdflmxosfse.supabase.co/rest/v1/randos_lst?select=resume"
-
-const key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndobHhiZm5teXFkZmxteG9zZnNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3ODA5MTksImV4cCI6MjA4ODM1NjkxOX0.vf3sdnJRnnXyIx998fhPSIUPX0WS7KqDbvAwesCzOcE"
-
-try{
-
-const res = await fetch(url,{headers:{apikey:key}})
-const data = await res.json()
-
-randos = data.map(r=>{
-const premiereLigne = r.resume.split("\n")[0]
-return { nom: premiereLigne }
-})
-
-}catch(e){
-console.error("Erreur chargement randos",e)
-}
-
-}
-
-function activerAutocompleteRandos(){
-
-const input = document.getElementById("rechercheRando")
-const suggestions = document.getElementById("suggestions")
-const champNom = document.getElementById("nomRando")
-
-if(!input || !suggestions || !champNom) return
-
-input.addEventListener("input", ()=>{
-
-const texte = input.value.toLowerCase()
-
-suggestions.innerHTML=""
-
-if(texte.length < 2) return
-
-const filtres = randos.filter(r =>
-r.nom.toLowerCase().includes(texte)
-)
-
-filtres.slice(0,10).forEach(r=>{
-
-const div=document.createElement("div")
-div.className="suggestion"
-div.textContent=r.nom
-
-div.onclick=()=>{
-champNom.value=r.nom
-input.value=r.nom
-suggestions.innerHTML=""
-}
-
-suggestions.appendChild(div)
-
-})
-
-})
-
-}
-
-/* -----------------------------
-   AUTRE ANIMATEUR
---------------------------------*/
 
 function gestionAutreAnimateur(){
 
@@ -105,13 +32,10 @@ champ.value = "";
 
 }
 
-/* -----------------------------
-   AUTRE PARKING
---------------------------------*/
 
 function gestionAutreParking(){
 
-const select = document.getElementById("parkingCovoiturage");
+const select = document.getElementById("parking");
 const champ = document.getElementById("nouveauParking");
 
 select.addEventListener("change", () => {
@@ -128,57 +52,48 @@ champ.value = "";
 
 }
 
-/* -----------------------------
-   INITIALISATION
---------------------------------*/
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-/* charger randos autocomplete */
+/* randos */
 
-await chargerRandos()
-activerAutocompleteRandos()
-
-/* randos existantes */
-
-remplirMenu()
-activerRecherche()
-initHoraires()
+remplirMenu();
+activerRecherche();
+initHoraires();
 
 /* animateurs */
 
-remplirMenuAnimateurs()
-gestionAutreAnimateur()
+remplirMenuAnimateurs();
+activerRechercheAnimateur();
+gestionAutreAnimateur();
 
-/* parkings */
+/* parkings covoiturage */
 
-gestionAutreParking()
+remplirMenuParkings();
+gestionAutreParking();
 
-/* carte */
+/* carte parking rando */
 
-initCarte()
+initCarte();
 
 document
 .getElementById("btnGeocoder")
-.addEventListener("click", chercherLieu)
+.addEventListener("click", chercherLieu);
 
-/* covoiturage */
+/* cout covoiturage */
 
 document
 .getElementById("autoroute")
-.addEventListener("input", calculCovoiturage)
+.addEventListener("input", calculCovoiturage);
 
 /* gpx */
 
-initGPX()
-initProfilGPX()
+initGPX();
+initProfilGPX();
 
-/* résumé */
+/* résumé + envoi */
 
-initResume()
+initResume();
+initEnvoi();
 
-/* envoi */
-
-initEnvoi()
-
-})
+});
