@@ -1,3 +1,4 @@
+console.log("APP JS CHARGE");
 import { remplirMenu } from "./menuRandos.js";
 console.log("Options rando :", document.getElementById("rando").options.length);
 import { activerRecherche } from "./rechercheRandos.js";
