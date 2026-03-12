@@ -1,3 +1,4 @@
+console.log("app.js chargé automatiquement");
 // récupération des éléments
 
 const rechercheInput = document.getElementById("rechercheRando");
