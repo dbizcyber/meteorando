@@ -1,4 +1,3 @@
-console.log("Recherche activée, options :", select.options.length);
 export function activerRecherche(){
 
 const input = document.getElementById("rechercheRando");
@@ -40,5 +39,5 @@ champNom.value = select.value;
 }
 
 });
-
+console.log("Recherche activée, options :", select.options.length);
 }
