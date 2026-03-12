@@ -107,13 +107,8 @@ autoroute.addEventListener("input", calculCovoiturage);
 initGPX();
 initProfilGPX();
 
-/* météo */
-
-afficherMeteo();
-
 /* résumé + envoi */
 
 initResume();
 initEnvoi();
-
 });
