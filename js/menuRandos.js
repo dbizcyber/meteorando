@@ -9,6 +9,7 @@ console.error("select rando introuvable");
 return;
 }
 
+select.innerHTML = "";
 randos.forEach(r => {
 
 const option = document.createElement("option");
