@@ -124,7 +124,32 @@ section:nth-of-type(10){
 border-left:8px solid var(--bleu);
 }
 
+.search-rando {
+  position: relative;
+}
 
+#suggestions {
+  position: absolute;
+  top: 100%;      /* juste sous l’input */
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 6px;
+  z-index: 1000;
+}
+
+.suggestion {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestion:hover,
+.suggestion.highlight {
+  background: #f0f0f0;
+}
 /* =========================
 FORMULAIRES
 ========================= */
