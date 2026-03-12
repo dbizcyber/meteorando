@@ -1,20 +1,39 @@
-export async function afficherMeteo(lat,lon){
+export async function afficherMeteo(lat, lon){
+
+/* sécurité coordonnées */
+
+if(!lat || !lon){
+console.warn("Coordonnées météo manquantes");
+return;
+}
 
 let date = document.getElementById("dateRando").value
 
 if(!date){
 
 const aujourd = new Date()
-
 date = aujourd.toISOString().split("T")[0]
 
 }
+
+/* appel API */
 
 const url =
 `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant&timezone=Europe/Paris`
 
 const rep = await fetch(url)
+
+if(!rep.ok){
+console.error("Erreur appel météo");
+return;
+}
+
 const data = await rep.json()
+
+if(!data.daily){
+console.error("Données météo invalides", data);
+return;
+}
 
 const jours = data.daily.time
 const i = jours.indexOf(date)
@@ -32,6 +51,7 @@ document.getElementById("meteoTemp").textContent =
 /* météo */
 
 const code = data.daily.weathercode[i]
+
 document.getElementById("meteoEtat").textContent =
 decodeMeteo(code)
 
@@ -58,6 +78,7 @@ document.getElementById("meteoRafales").textContent =
 `💨 ${raf} km/h`
 
 }
+
 /* décodage météo */
 
 function decodeMeteo(code){
@@ -77,7 +98,6 @@ if(code>=95) return "⛈ Orage"
 return "Conditions variables"
 
 }
-
 
 /* direction vent */
 
