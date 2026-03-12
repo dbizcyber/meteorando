@@ -1,99 +1,90 @@
-import { remplirMenu } from "./menuRandos.js";
-import { activerRecherche } from "./rechercheRandos.js";
-import { initHoraires } from "./horairesRando.js";
-import { remplirMenuAnimateurs } from "./menuAnimateurs.js";
-import { activerRechercheAnimateur } from "./rechercheAnimateur.js";
-import { remplirMenuParkings } from "./menuParkings.js";
-import { initCarte, chercherLieu } from "./carteParking.js";
-import { calculCovoiturage } from "./covoiturage.js";
-import { initGPX } from "./gpxAnalyse.js";
-import { initProfilGPX } from "./profilAltitude.js";
-import { afficherMeteo } from "./meteoRando.js";
-import { initResume } from "./resumeRando.js";
-import { initEnvoi } from "./envoiRando.js";
+// récupération des éléments
+
+const rechercheInput = document.getElementById("rechercheRando");
+const suggestionsDiv = document.getElementById("suggestions");
+const nomRando = document.getElementById("nomRando");
 
 
-function gestionAutreAnimateur(){
+// exemple de données randonnées
+// à remplacer plus tard par ton API
 
-const select = document.getElementById("animateur");
-const champ = document.getElementById("nouvelAnimateur");
+const randos = [
 
-select.addEventListener("change", () => {
+{nom:"Mont Ventoux"},
+{nom:"Mont Aigoual"},
+{nom:"Sainte Victoire"},
+{nom:"Calanques de Cassis"},
+{nom:"Pic Saint Loup"},
+{nom:"Dentelles de Montmirail"}
 
-if(select.value.startsWith("Autre")){
-champ.style.display = "block";
-champ.focus();
-}else{
-champ.style.display = "none";
-champ.value = "";
-}
+];
+
+
+// afficher les suggestions
+
+function afficherSuggestions(resultats){
+
+suggestionsDiv.innerHTML="";
+
+resultats.forEach(rando=>{
+
+const div=document.createElement("div");
+
+div.className="suggestion";
+
+div.textContent=rando.nom;
+
+
+// clic sur une suggestion
+
+div.addEventListener("click",()=>{
+
+nomRando.value=rando.nom;
+
+rechercheInput.value=rando.nom;
+
+suggestionsDiv.innerHTML="";
+
+});
+
+suggestionsDiv.appendChild(div);
 
 });
 
 }
 
 
-function gestionAutreParking(){
+// recherche dynamique
 
-const select = document.getElementById("parkingCovoiturage");
-const champ = document.getElementById("nouveauParking");
+rechercheInput.addEventListener("input",()=>{
 
-select.addEventListener("change", () => {
+const texte=rechercheInput.value.toLowerCase();
 
-if(select.value.startsWith("Autre")){
-champ.style.display = "block";
-champ.focus();
-}else{
-champ.style.display = "none";
-champ.value = "";
+if(texte.length<2){
+
+suggestionsDiv.innerHTML="";
+
+return;
+
 }
+
+const resultats=randos.filter(r=> 
+r.nom.toLowerCase().includes(texte)
+);
+
+afficherSuggestions(resultats);
 
 });
 
+
+// fermer suggestions si clic ailleurs
+
+document.addEventListener("click",(e)=>{
+
+if(!e.target.closest(".search-rando")){
+
+suggestionsDiv.innerHTML="";
+
 }
-
-
-document.addEventListener("DOMContentLoaded", () => {
-
-/* randos */
-
-remplirMenu();
-activerRecherche();
-initHoraires();
-
-/* animateurs */
-
-remplirMenuAnimateurs();
-activerRechercheAnimateur();
-gestionAutreAnimateur();
-
-/* parkings covoiturage */
-
-remplirMenuParkings();
-gestionAutreParking();
-
-/* carte parking rando */
-
-initCarte();
-
-document
-.getElementById("btnGeocoder")
-.addEventListener("click", chercherLieu);
-
-/* cout covoiturage */
-
-document
-.getElementById("autoroute")
-.addEventListener("input", calculCovoiturage);
-
-/* gpx */
-
-initGPX();
-initProfilGPX();
-
-/* résumé + envoi */
-
-initResume();
-initEnvoi();
 
 });
