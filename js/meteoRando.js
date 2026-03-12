@@ -35,10 +35,15 @@ console.error("Données météo invalides", data);
 return;
 }
 
-const jours = data.daily.time
-const i = jours.indexOf(date)
+const jours = data.daily.time.map(d => d.split("T")[0]); // sécurité
 
-if(i === -1) return
+let i = jours.indexOf(date);
+
+// fallback si la date choisie n'existe pas
+if(i === -1){
+  console.warn("Date non trouvée dans l'API météo, on prend le premier jour dispo");
+  i = 0;
+}
 
 /* température */
 
