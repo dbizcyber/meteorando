@@ -1,5 +1,5 @@
 import { remplirMenu } from "./menuRandos.js";
-console.log("Options rando :", document.getElementById("rando").options.length);
+
 import { activerRecherche } from "./rechercheRandos.js";
 import { initHoraires } from "./horairesRando.js";
 import { remplirMenuAnimateurs } from "./menuAnimateurs.js";
