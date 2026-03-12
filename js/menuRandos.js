@@ -1,4 +1,3 @@
-console.log("Randos chargées :", select.options.length);
 import { randos } from "../data/randos.js";
 
 export function remplirMenu() {
@@ -20,5 +19,5 @@ option.textContent = r;
 select.appendChild(option);
 
 });
-
+console.log("Randos chargées :", select.options.length);
 }
