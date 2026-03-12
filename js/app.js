@@ -1,91 +1,119 @@
-console.log("app.js chargé automatiquement");
-// récupération des éléments
-
-const rechercheInput = document.getElementById("rechercheRando");
-const suggestionsDiv = document.getElementById("suggestions");
-const nomRando = document.getElementById("nomRando");
-
-
-// exemple de données randonnées
-// à remplacer plus tard par ton API
-
-const randos = [
-
-{nom:"Mont Ventoux"},
-{nom:"Mont Aigoual"},
-{nom:"Sainte Victoire"},
-{nom:"Calanques de Cassis"},
-{nom:"Pic Saint Loup"},
-{nom:"Dentelles de Montmirail"}
-
-];
+import { remplirMenu } from "./menuRandos.js";
+import { activerRecherche } from "./rechercheRandos.js";
+import { initHoraires } from "./horairesRando.js";
+import { remplirMenuAnimateurs } from "./menuAnimateurs.js";
+import { activerRechercheAnimateur } from "./rechercheAnimateur.js";
+import { remplirMenuParkings } from "./menuParkings.js";
+import { initCarte, chercherLieu } from "./carteParking.js";
+import { calculCovoiturage } from "./covoiturage.js";
+import { initGPX } from "./gpxAnalyse.js";
+import { initProfilGPX } from "./profilAltitude.js";
+import { afficherMeteo } from "./meteoRando.js";
+import { initResume } from "./resumeRando.js";
+import { initEnvoi } from "./envoiRando.js";
 
 
-// afficher les suggestions
+/* gestion du champ "autre animateur" */
 
-function afficherSuggestions(resultats){
+function gestionAutreAnimateur() {
 
-suggestionsDiv.innerHTML="";
+const select = document.getElementById("animateur");
+const champ = document.getElementById("nouvelAnimateur");
 
-resultats.forEach(rando=>{
+if(!select || !champ) return;
 
-const div=document.createElement("div");
+select.addEventListener("change", () => {
 
-div.className="suggestion";
-
-div.textContent=rando.nom;
-
-
-// clic sur une suggestion
-
-div.addEventListener("click",()=>{
-
-nomRando.value=rando.nom;
-
-rechercheInput.value=rando.nom;
-
-suggestionsDiv.innerHTML="";
-
-});
-
-suggestionsDiv.appendChild(div);
+if(select.value.startsWith("Autre")){
+champ.style.display = "block";
+champ.focus();
+}else{
+champ.style.display = "none";
+champ.value = "";
+}
 
 });
 
 }
 
 
-// recherche dynamique
+/* gestion du champ "autre parking" */
 
-rechercheInput.addEventListener("input",()=>{
+function gestionAutreParking(){
 
-const texte=rechercheInput.value.toLowerCase();
+const select = document.getElementById("parkingCovoiturage");
+const champ = document.getElementById("nouveauParking");
 
-if(texte.length<2){
+if(!select || !champ) return;
 
-suggestionsDiv.innerHTML="";
+select.addEventListener("change", () => {
 
-return;
-
+if(select.value.startsWith("Autre")){
+champ.style.display = "block";
+champ.focus();
+}else{
+champ.style.display = "none";
+champ.value = "";
 }
-
-const resultats=randos.filter(r=> 
-r.nom.toLowerCase().includes(texte)
-);
-
-afficherSuggestions(resultats);
 
 });
 
-
-// fermer suggestions si clic ailleurs
-
-document.addEventListener("click",(e)=>{
-
-if(!e.target.closest(".search-rando")){
-
-suggestionsDiv.innerHTML="";
-
 }
+
+
+/* INITIALISATION APPLICATION */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+console.log("Application MeteoRando initialisée");
+
+/* randonnées */
+
+remplirMenu();
+activerRecherche();
+initHoraires();
+
+/* animateurs */
+
+remplirMenuAnimateurs();
+activerRechercheAnimateur();
+gestionAutreAnimateur();
+
+/* parkings covoiturage */
+
+remplirMenuParkings();
+gestionAutreParking();
+
+/* carte parking rando */
+
+initCarte();
+
+const btnGeocoder = document.getElementById("btnGeocoder");
+
+if(btnGeocoder){
+btnGeocoder.addEventListener("click", chercherLieu);
+}
+
+/* coût covoiturage */
+
+const autoroute = document.getElementById("autoroute");
+
+if(autoroute){
+autoroute.addEventListener("input", calculCovoiturage);
+}
+
+/* gpx */
+
+initGPX();
+initProfilGPX();
+
+/* météo */
+
+afficherMeteo();
+
+/* résumé + envoi */
+
+initResume();
+initEnvoi();
 
 });
