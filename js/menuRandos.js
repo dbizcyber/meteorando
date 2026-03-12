@@ -1,3 +1,4 @@
+console.log("Randos chargées :", select.options.length);
 import { randos } from "../data/randos.js";
 
 export function remplirMenu() {
