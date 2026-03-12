@@ -1,3 +1,4 @@
+console.log("Recherche activée, options :", select.options.length);
 export function activerRecherche(){
 
 const input = document.getElementById("rechercheRando");
