@@ -1,28 +1,72 @@
-export function activerRecherche(){
+import { randos } from "../data/randos.js";
 
-const input = document.getElementById("rechercheRando")
-const select = document.getElementById("rando")
+export function activerRecherche() {
 
-if(!input || !select) return
+  const input = document.getElementById("rechercheRando");
+  const suggestionsDiv = document.getElementById("suggestions");
+  const nomRando = document.getElementById("nomRando");
 
-input.addEventListener("input", function(){
+  if (!input || !suggestionsDiv || !nomRando) {
+    console.error("Éléments de recherche introuvables !");
+    return;
+  }
 
-const filtre = input.value.toLowerCase()
+  // Filtrer et afficher les suggestions à chaque frappe
+  input.addEventListener("input", () => {
+    const filtre = input.value.toLowerCase().trim();
 
-for(const option of select.options){
+    // Effacer les anciennes suggestions
+    suggestionsDiv.innerHTML = "";
 
-const texte = option.text.toLowerCase()
+    if (filtre === "") return;
 
-option.hidden = !texte.includes(filtre)
+    // Créer les suggestions filtrées
+    const matches = randos.filter(r => r.toLowerCase().includes(filtre));
 
-}
+    matches.forEach(r => {
+      const div = document.createElement("div");
+      div.className = "suggestion";
+      div.textContent = r;
 
-})
+      // Cliquer sur une suggestion remplit le nom et vide les suggestions
+      div.addEventListener("click", () => {
+        nomRando.value = r;
+        input.value = r; // si tu veux garder le texte tapé
+        suggestionsDiv.innerHTML = "";
+      });
 
-select.addEventListener("change", () => {
+      suggestionsDiv.appendChild(div);
+    });
+  });
 
-document.getElementById("nomRando").value = select.value
+  // Clic en dehors de la zone pour cacher les suggestions
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".search-rando")) {
+      suggestionsDiv.innerHTML = "";
+    }
+  });
 
-})
+  // Optionnel : navigation au clavier (flèches + Enter)
+  let index = -1;
 
+  input.addEventListener("keydown", (e) => {
+    const suggestions = Array.from(suggestionsDiv.children);
+    if (suggestions.length === 0) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      index = (index + 1) % suggestions.length;
+      suggestions.forEach((s, i) => s.classList.toggle("highlight", i === index));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      index = (index - 1 + suggestions.length) % suggestions.length;
+      suggestions.forEach((s, i) => s.classList.toggle("highlight", i === index));
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (index >= 0 && index < suggestions.length) {
+        suggestions[index].click();
+        index = -1;
+      }
+    }
+  });
 }
