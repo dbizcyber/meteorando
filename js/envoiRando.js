@@ -2,54 +2,39 @@ console.log("envoiRando.js chargé");
 
 export function initEnvoi() {
   const btn = document.getElementById("btnEnvoyer");
-
-  if (!btn) {
-    console.warn("Bouton btnEnvoyer introuvable dans le DOM");
-    return;
-  }
-
+  if (!btn) return;
   btn.addEventListener("click", envoyerRando);
-  console.log("initEnvoi attaché au bouton");
 }
 
 async function envoyerRando() {
   console.log("envoyerRando déclenché");
 
+  // Récupération des données de la page
+  const resume = document.getElementById("resumeRando")?.textContent.trim();
+  const emailUser = document.getElementById("emailUser")?.value.trim();
+
+  if (!resume) return alert("Veuillez générer le résumé avant l'envoi");
+  if (!emailUser) return alert("Veuillez saisir un email");
+
+  // Récupération du profil altimétrique (canvas)
+  let profilPNG = null;
+  const canvas = document.getElementById("profilAltitude");
+  if (canvas) profilPNG = canvas.toDataURL("image/png");
+
+  console.log("profilPNG longueur:", profilPNG ? profilPNG.length : "null");
+  console.log("resume:", resume);
+  console.log("email:", emailUser);
+
   try {
-    const resume = document.getElementById("resumeRando")?.textContent.trim();
-    const emailUser = document.getElementById("emailUser")?.value.trim();
-
-    if (!resume) {
-      alert("Veuillez générer le résumé avant l'envoi");
-      return;
-    }
-    if (!emailUser) {
-      alert("Veuillez saisir un email");
-      return;
-    }
-
-    /* récupération du profil altimétrique */
-    let profilPNG = null;
-    const canvas = document.getElementById("profilAltitude");
-    if (canvas) {
-      profilPNG = canvas.toDataURL("image/png");
-      console.log("profilPNG longueur:", profilPNG.length);
-    } else {
-      console.warn("Canvas profilAltitude introuvable");
-    }
-
-    console.log("resume:", resume);
-    console.log("email:", emailUser);
-
-    /* envoi vers Supabase / fonction serverless */
+    // Appel à Supabase serverless
     const response = await fetch(
       "https://whlxbfnmyqdflmxosfse.supabase.co/functions/v1/dynamic-handler",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "apikey": "VOTRE_API_KEY",
-          "Authorization": "Bearer VOTRE_API_KEY"
+          "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndobHhiZm5teXFkZmxteG9zZnNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3ODA5MTksImV4cCI6MjA4ODM1NjkxOX0.vf3sdnJRnnXyIx998fhPSIUPX0WS7KqDbvAwesCzOcE",
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndobHhiZm5teXFkZmxteG9zZnNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3ODA5MTksImV4cCI6MjA4ODM1NjkxOX0.vf3sdnJRnnXyIx998fhPSIUPX0WS7KqDbvAwesCzOcE"
         },
         body: JSON.stringify({
           resume: resume,
@@ -63,13 +48,13 @@ async function envoyerRando() {
 
     if (data.success) {
       alert("PDF créé, email envoyé et profil enregistré");
+      console.log("Réponse serverless:", data);
     } else {
-      alert("Erreur : " + (data.error || "inconnue"));
-      console.error("Erreur renvoyée :", data);
+      alert("Erreur : " + data.error);
+      console.error("Erreur serveur :", data);
     }
-
   } catch (err) {
-    console.error(err);
     alert("Erreur réseau : " + err.message);
+    console.error(err);
   }
 }
