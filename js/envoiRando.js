@@ -1,5 +1,7 @@
 console.log("envoiRando.js chargé");
 
+import { chartProfil } from "./profilAltitude.js"
+
 export function initEnvoi() {
   const btn = document.getElementById("btnEnvoyer");
 
@@ -35,16 +37,14 @@ async function envoyerRando() {
 
     /* récupération du profil */
 
-    const canvas = document.getElementById("profilAltitude");
+let profilPNG = null;
 
-    let profilPNG = null;
-
-    if (canvas) {
-      profilPNG = canvas.toDataURL("image/png");
-      console.log("profil capturé :", profilPNG.substring(0,40));
-    } else {
-      console.warn("canvas profilAltitude introuvable");
-    }
+if(chartProfil){
+  profilPNG = chartProfil.toBase64Image();
+  console.log("profil capturé :", profilPNG.substring(0,40));
+}else{
+  console.warn("profil non disponible");
+}
 
     /* appel serveur */
 
