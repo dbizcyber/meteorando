@@ -11,128 +11,48 @@ import { afficherMeteo } from "./meteoRando.js";
 import { initResume } from "./resumeRando.js";
 import { initEnvoi } from "./envoiRando.js";
 
-
-/* gestion du champ "autre animateur" */
-
-function gestionAutreAnimateur() {
-
-const select = document.getElementById("animateur");
-const champ = document.getElementById("nouvelAnimateur");
-
-if(!select || !champ) return;
-
-select.addEventListener("change", () => {
-
-if(select.value.startsWith("Autre")){
-champ.style.display = "block";
-champ.focus();
-}else{
-champ.style.display = "none";
-champ.value = "";
-}
-
-});
-
-}
-
-
-/* gestion du champ "autre parking" */
-
-function gestionAutreParking(){
-
-const select = document.getElementById("parkingCovoiturage");
-const champ = document.getElementById("nouveauParking");
-
-if(!select || !champ) return;
-
-select.addEventListener("change", () => {
-
-if(select.value.startsWith("Autre")){
-champ.style.display = "block";
-champ.focus();
-}else{
-champ.style.display = "none";
-champ.value = "";
-}
-
-});
-
-}
-
-
-/* INITIALISATION APPLICATION */
-
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("Application MeteoRando initialisée");
 
-console.log("Application MeteoRando initialisée");
+  const dateInput = document.getElementById("dateRando");
+  if (dateInput && !dateInput.value) {
+    dateInput.value = new Date().toISOString().split("T")[0];
+  }
 
-/* date automatique */
+  /* randonnées */
+  remplirMenu();
+  activerRecherche();
+  initHoraires();
 
-const dateInput = document.getElementById("dateRando");
+  /* animateurs */
+  remplirMenuAnimateurs();
 
-if(dateInput && !dateInput.value){
-dateInput.value = new Date().toISOString().split("T")[0];
-}
+  /* parkings covoiturage */
+  remplirMenuParkings();
 
-/* randonnées */
+  /* gestion carte */
+  initCarte();
+  const btnGeocoder = document.getElementById("btnGeocoder");
+  if (btnGeocoder) btnGeocoder.addEventListener("click", chercherLieu);
 
-remplirMenu();
-activerRecherche();
-initHoraires();
+  /* coût covoiturage */
+  const autoroute = document.getElementById("autoroute");
+  if (autoroute) autoroute.addEventListener("input", calculCovoiturage);
 
-/* animateurs */
+  /* gpx */
+  initGPX();
+  initProfilGPX();
 
-remplirMenuAnimateurs();
-gestionAutreAnimateur();
+  /* résumé + envoi */
+  initResume();
+  initEnvoi();
 
-/* parkings covoiturage */
-
-remplirMenuParkings();
-gestionAutreParking();
-
-/* carte parking rando */
-
-initCarte();
-
-const btnGeocoder = document.getElementById("btnGeocoder");
-
-if(btnGeocoder){
-btnGeocoder.addEventListener("click", chercherLieu);
-}
-
-/* coût covoiturage */
-
-const autoroute = document.getElementById("autoroute");
-
-if(autoroute){
-autoroute.addEventListener("input", calculCovoiturage);
-}
-
-/* gpx */
-
-initGPX();
-initProfilGPX();
-
-/* résumé + envoi */
-
-initResume();
-initEnvoi();
-
-/* météo mise à jour si date change */
-
-if(dateInput){
-
-dateInput.addEventListener("change", () => {
-
-const lat = document.getElementById("latParking").textContent;
-const lon = document.getElementById("lonParking").textContent;
-
-if(lat && lon){
-afficherMeteo(lat, lon);
-}
-
-});
-
-}
-
+  /* mise à jour météo si date change */
+  if (dateInput) {
+    dateInput.addEventListener("change", () => {
+      const lat = document.getElementById("latParking")?.textContent;
+      const lon = document.getElementById("lonParking")?.textContent;
+      if (lat && lon) afficherMeteo(lat, lon);
+    });
+  }
 });
