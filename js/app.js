@@ -114,15 +114,3 @@ initProfilGPX();
 initResume();
 initEnvoi();
 
-/* ======== mise à jour météo quand la date change ======== */
-
-dateInput.addEventListener("change", () => {
-
-  const lat = document.getElementById("latParking").textContent;
-  const lon = document.getElementById("lonParking").textContent;
-
-  if(lat && lon){
-    afficherMeteo(lat, lon);
-  }
-
-});
