@@ -1,7 +1,5 @@
 export const animateurs = [
 
-"Autre… (saisir manuellement)",
-
 "ALEZINA Pierre Camille 06 03 18 76 16",
 "BIZARD Dominique 06 88 00 15 85",
 "BRIOUDE André 06 84 53 70 30",
