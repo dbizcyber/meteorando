@@ -1,350 +1,337 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Création fiche randonnée</title>
 
-<meta charset="UTF-8">
-<title>Création fiche randonnée</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<link rel="stylesheet" href="css/style.css">
-
-<style>
-  .search-rando{
-position:relative;
-}
-
-#suggestions{
-position:absolute;
-background:white;
-border:1px solid #ccc;
-width:100%;
-max-height:200px;
-overflow-y:auto;
-border-radius:6px;
-z-index:1000;
-}
-
-.suggestion{
-padding:8px;
-cursor:pointer;
-}
-
-.suggestion:hover{
-background:#f0f0f0;
-}
-#rando{
-border:1px solid #ccc;
-border-radius:6px;
-padding:5px;
-}
-
-body{
-font-family:Arial;
-max-width:1100px;
-margin:auto;
-padding:20px;
-}
-
-section{
-border:1px solid #ccc;
-padding:15px;
-margin-bottom:20px;
-border-radius:8px;
-}
-
-label{
-display:block;
-margin-top:10px;
-}
-
-#map{
-height:400px;
-margin-top:10px;
-}
-
-canvas{
-max-height:300px;
-}
-
-pre{
-white-space:pre-wrap;
-background:#f6f6f6;
-padding:15px;
-border-radius:6px;
-}
-
-</style>
-
+  <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
-<h1>Création fiche randonnée</h1>
-
-<!-- INFORMATIONS GENERALES -->
-
-<section>
-
-<h2>Informations générales</h2>
-
-<label>Rechercher une randonnée</label>
-
-<div class="search-rando">
-
-<input
-id="rechercheRando"
-type="text"
-placeholder="Tapez quelques lettres...">
-
-<div id="suggestions"></div>
-
-</div>
-
-<!-- select utilisé par le javascript -->
-<select id="rando"></select>
-
-<label>Nom de la randonnée</label>
-
-<input
-id="nomRando"
-placeholder="Nom de la randonnée"
-readonly>
-
-  
-<label>Date de la randonnée</label>
-<input type="date" id="dateRando">
-
-<label>Animateur</label>
-<select id="animateur"></select>
-
-<input
-id="rechercheAnimateur"
-type="text"
-placeholder="Rechercher un animateur">
-
-<input
-id="nouvelAnimateur"
-placeholder="Nom animateur"
-style="display:none">
-
-</section>
-
-
-<!-- METEO -->
-
-<section>
-
-<h2>Météo prévue</h2>
-
-<div id="meteoRando">
-
-<p>Météo : <span id="meteoEtat"></span></p>
-
-<p>Température : <span id="meteoTemp"></span></p>
-
-<p>Pluie : <span id="meteoPluie"></span></p>
-
-<p>Vent : <span id="meteoVent"></span></p>
-
-<p>Rafales : <span id="meteoRafales"></span></p>
-
-</div>
-
-</section>
-
-
-<!-- COVOITURAGE -->
-
-<section>
-<h2>Covoiturage</h2>
-
-<label>Parking covoiturage</label>
-
-<select id="parkingCovoiturage">
-
-<option>Parking Bricomarché - Châteaurenard</option>
-<option>Parking MIN - Châteaurenard</option>
-<option>Parking du Stade - Châteaurenard</option>
-<option>Parking Super U - Châteaurenard</option>
-<option>Parking des Allées - Châteaurenard</option>
-<option value="autre">Autre</option>
-
-</select>
-
-<input
-id="nouveauParking"
-placeholder="Nom du parking"
-style="display:none">
-
-<label>Heure de rendez-vous</label>
-<input type="time" id="heureRV">
-
-<p>
-Heure de départ :
-<span id="heureDepart"></span>
-</p>
-
-<label>Trajet suggéré</label>
-
-<textarea id="itineraire"></textarea>
-
-</section>
-
-
-<!-- PARKING RANDO -->
-
-<section>
-
-<h2>Parking départ randonnée</h2>
-
-<input id="lieuRecherche" placeholder="Rechercher un lieu">
-
-<button id="btnGeocoder">
-Localiser
-</button>
-
-<div id="map"></div>
-
-<p>
-Distance A/R :
-<span id="distanceAR">0</span> km
-</p>
-
-<p>
-Adresse :
-<span id="parkingRandoAdresse"></span>
-</p>
-
-<p>
-GPS :
-<span id="latParking"></span>,
-<span id="lonParking"></span>
-</p>
-
-</section>
-
-
-<!-- COUTS -->
-
-<section>
-
-<h2>Coût du trajet</h2>
-
-<label>Autoroute (€)</label>
-
-<input type="number" id="autoroute" value="0">
-
-<p>Coût Km : <span id="coutKm"></span></p>
-
-<p>Total trajet : <span id="coutTotal"></span></p>
-
-<p>Covoiturage (4) : <span id="cout4"></span></p>
-
-<p>Covoiturage (5) : <span id="cout5"></span></p>
-
-</section>
-
-
-<!-- GPX -->
-
-<section>
-
-<h2>Analyse GPX</h2>
-<input type="file" id="gpxFile" accept=".gpx">
-
-<p>Distance : <span id="distanceGPX"></span> km</p>
-
-<p>Dénivelé + : <span id="denivele"></span> m</p>
-
-<p>Durée marche: <span id="dureeMarche"></span></p>
-
-<p>IBP : <span id="ibp"></span></p>
-
-<p>Effort : <span id="effort"></span></p>
-
-<label>Technicité</label>
-<input id="technicite" type="number" min="1" max="5">
-
-<label>Risque</label>
-<input id="risque" type="number" min="1" max="5">
-
-</section>
-
-
-<!-- PROFIL -->
-
-<section>
-
-<h2>Profil altimétrique</h2>
-
-<label>Heure départ marche</label>
-<input type="time" id="heureDepartMarche">
-
-<label>Vitesse moyenne km/h</label>
-<input type="number" id="vitesse" value="4">
-
-<label>Temps de marche simulé</label>
-  
-<div id="dureeMarcheSim"></div>
-<div id="heureArriveeSim"></div>
-
-<canvas id="profilAltitude"></canvas>
-
-</section>
-
-
-<!-- REMARQUES -->
-
-<section>
-
-<h2>Remarques</h2>
-
-<textarea id="remarques"></textarea>
-
-</section>
-
-
-<!-- RESUME -->
-
-<section>
-
-<h2>Résumé</h2>
-
-<button id="btnResume">
-Générer le résumé
-</button>
-
-<pre id="resumeRando"></pre>
-
-</section>
-
-
-<!-- ENVOI -->
-
-<section>
-
-<h2>PDF et envoi</h2>
-
-<label>Email pour copie</label>
-<input type="email" id="emailUser">
-
-<button type="button" id="btnEnvoyer">
-Créer PDF et envoyer
-</button>
-
-</section>
-
-<!-- JS -->
-
-<script type="module" src="js/app.js"></script>
-
+  <h1>Fiche randonnée</h1>
+  <p class="app-sub">Création et envoi de fiche de sortie</p>
+
+  <!-- ONGLETS -->
+  <div class="tabs">
+    <button class="tab active" data-tab="infos">Infos générales</button>
+    <button class="tab" data-tab="meteo">Météo</button>
+    <button class="tab" data-tab="covoit">Covoiturage</button>
+    <button class="tab" data-tab="parking">Parking départ</button>
+    <button class="tab" data-tab="gpx">GPX &amp; profil</button>
+    <button class="tab" data-tab="resume">Résumé &amp; envoi</button>
+  </div>
+
+  <!-- PANEL : INFOS GÉNÉRALES -->
+  <div id="panel-infos" class="panel active">
+    <section>
+      <h2>Randonnée</h2>
+
+      <div class="field">
+        <label>Rechercher une randonnée</label>
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input id="rechercheRando" type="text" placeholder="Tapez quelques lettres...">
+          <div id="suggestions"></div>
+        </div>
+        <select id="rando"></select>
+      </div>
+
+      <div class="grid2">
+        <div class="field">
+          <label>Nom de la randonnée</label>
+          <input id="nomRando" placeholder="—" readonly>
+        </div>
+        <div class="field">
+          <label>Date</label>
+          <input type="date" id="dateRando">
+        </div>
+        <div class="field">
+          <label>Animateur</label>
+          <select id="animateur"><option>—</option></select>
+        </div>
+        <div class="field">
+          <label>Rechercher animateur</label>
+          <input id="rechercheAnimateur" type="text" placeholder="Nom...">
+        </div>
+      </div>
+
+      <div class="field" id="wrapNouvelAnimateur" style="display:none">
+        <label>Nouvel animateur</label>
+        <input id="nouvelAnimateur" placeholder="Prénom Nom">
+      </div>
+    </section>
+  </div>
+
+  <!-- PANEL : MÉTÉO -->
+  <div id="panel-meteo" class="panel">
+    <section>
+      <h2>Météo prévue</h2>
+      <div class="meteo-grid">
+        <div class="meteo-item">
+          <div class="meteo-label">État</div>
+          <div class="meteo-icon">⛅</div>
+          <div class="meteo-val" id="meteoEtat">—</div>
+        </div>
+        <div class="meteo-item">
+          <div class="meteo-label">Température</div>
+          <div class="meteo-icon">🌡</div>
+          <div class="meteo-val" id="meteoTemp">—</div>
+        </div>
+        <div class="meteo-item">
+          <div class="meteo-label">Pluie</div>
+          <div class="meteo-icon">💧</div>
+          <div class="meteo-val" id="meteoPluie">—</div>
+        </div>
+        <div class="meteo-item">
+          <div class="meteo-label">Vent</div>
+          <div class="meteo-icon">💨</div>
+          <div class="meteo-val" id="meteoVent">—</div>
+        </div>
+        <div class="meteo-item">
+          <div class="meteo-label">Rafales</div>
+          <div class="meteo-icon">🌬</div>
+          <div class="meteo-val" id="meteoRafales">—</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PANEL : COVOITURAGE -->
+  <div id="panel-covoit" class="panel">
+    <section>
+      <h2>Point de rendez-vous</h2>
+      <div class="grid2">
+        <div class="field">
+          <label>Parking covoiturage</label>
+          <select id="parkingCovoiturage">
+            <option>Parking Bricomarché - Châteaurenard</option>
+            <option>Parking MIN - Châteaurenard</option>
+            <option>Parking du Stade - Châteaurenard</option>
+            <option>Parking Super U - Châteaurenard</option>
+            <option>Parking des Allées - Châteaurenard</option>
+            <option value="autre">Autre...</option>
+          </select>
+        </div>
+        <div class="field" id="wrapNouveauParking" style="display:none">
+          <label>Nom du parking</label>
+          <input id="nouveauParking" placeholder="Saisir le nom">
+        </div>
+        <div class="field">
+          <label>Heure de rendez-vous</label>
+          <input type="time" id="heureRV">
+        </div>
+        <div class="field">
+          <label>Heure de départ</label>
+          <input type="text" id="heureDepart" placeholder="Calculée automatiquement" readonly>
+        </div>
+      </div>
+      <div class="field">
+        <label>Trajet suggéré</label>
+        <textarea id="itineraire" placeholder="Itinéraire conseillé..."></textarea>
+      </div>
+    </section>
+  </div>
+
+  <!-- PANEL : PARKING DÉPART -->
+  <div id="panel-parking" class="panel">
+    <section>
+      <h2>Localisation parking départ</h2>
+      <div class="grid2" style="align-items:flex-end">
+        <div class="field">
+          <label>Rechercher un lieu</label>
+          <div class="search-wrap">
+            <span class="search-icon">📍</span>
+            <input id="lieuRecherche" placeholder="Village, lieu-dit...">
+          </div>
+        </div>
+        <button id="btnGeocoder">Localiser</button>
+      </div>
+
+      <div id="map"></div>
+
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-val"><span id="distanceAR">0</span> km</div>
+          <div class="stat-lbl">Distance A/R</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val" id="latParking">—</div>
+          <div class="stat-lbl">Latitude</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val" id="lonParking">—</div>
+          <div class="stat-lbl">Longitude</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Adresse détectée</label>
+        <input id="parkingRandoAdresse" readonly placeholder="—">
+      </div>
+    </section>
+
+    <section>
+      <h2>Coût du trajet</h2>
+      <div class="grid2">
+        <div class="field">
+          <label>Autoroute (€)</label>
+          <input type="number" id="autoroute" value="0" min="0" step="0.5">
+        </div>
+      </div>
+      <div class="cout-grid">
+        <div class="cout-item">
+          <div class="cout-lbl">Coût / km</div>
+          <div class="cout-val" id="coutKm">—</div>
+        </div>
+        <div class="cout-item">
+          <div class="cout-lbl">Total trajet</div>
+          <div class="cout-val" id="coutTotal">—</div>
+        </div>
+        <div class="cout-item">
+          <div class="cout-lbl">Covoiturage ×4</div>
+          <div class="cout-val" id="cout4">—</div>
+        </div>
+        <div class="cout-item">
+          <div class="cout-lbl">Covoiturage ×5</div>
+          <div class="cout-val" id="cout5">—</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PANEL : GPX & PROFIL -->
+  <div id="panel-gpx" class="panel">
+    <section>
+      <h2>Analyse GPX</h2>
+      <label class="file-drop" for="gpxFile">
+        <input type="file" id="gpxFile" accept=".gpx">
+        <div class="file-drop-icon">🗺</div>
+        <div>Déposer ou cliquer pour charger un fichier GPX</div>
+        <div class="file-drop-hint">.gpx uniquement</div>
+      </label>
+
+      <div class="stat-row" style="margin-top:16px">
+        <div class="stat">
+          <div class="stat-val" id="distanceGPX">—</div>
+          <div class="stat-lbl">km distance</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val" id="denivele">—</div>
+          <div class="stat-lbl">m dénivelé +</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val" id="dureeMarche">—</div>
+          <div class="stat-lbl">durée marche</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val" id="ibp">—</div>
+          <div class="stat-lbl">indice IBP</div>
+        </div>
+      </div>
+
+      <div class="ibp-bar">
+        <div class="ibp-dot" id="ibpDot" style="left:0%"></div>
+      </div>
+      <div class="ibp-labels">
+        <span>Facile</span><span>Modéré</span><span>Difficile</span><span>Très difficile</span>
+      </div>
+
+      <div class="field" style="margin-top:12px">
+        <label>Effort</label>
+        <input id="effort" readonly placeholder="—">
+      </div>
+    </section>
+
+    <section>
+      <h2>Profil altimétrique</h2>
+      <div class="grid2">
+        <div class="field">
+          <label>Heure départ marche</label>
+          <input type="time" id="heureDepartMarche">
+        </div>
+        <div class="field">
+          <label>Vitesse moyenne (km/h)</label>
+          <input type="number" id="vitesse" value="4" min="1" max="10" step="0.5">
+        </div>
+      </div>
+      <div class="stat-row" style="margin-top:12px">
+        <div class="stat">
+          <div class="stat-val" id="dureeMarcheSim">—</div>
+          <div class="stat-lbl">Durée simulée</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val" id="heureArriveeSim">—</div>
+          <div class="stat-lbl">Heure arrivée</div>
+        </div>
+      </div>
+      <canvas id="profilAltitude"></canvas>
+    </section>
+
+    <section>
+      <h2>Difficulté technique</h2>
+      <div class="grid2">
+        <div class="field">
+          <label>Technicité (1–5)</label>
+          <input id="technicite" type="number" min="1" max="5">
+        </div>
+        <div class="field">
+          <label>Risque (1–5)</label>
+          <input id="risque" type="number" min="1" max="5">
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PANEL : RÉSUMÉ & ENVOI -->
+  <div id="panel-resume" class="panel">
+    <section>
+      <h2>Remarques</h2>
+      <div class="field">
+        <textarea id="remarques" placeholder="Notes complémentaires, points d'attention..."></textarea>
+      </div>
+    </section>
+
+    <section>
+      <h2>Résumé généré</h2>
+      <button id="btnResume">Générer le résumé</button>
+      <pre id="resumeRando">Le résumé apparaîtra ici…</pre>
+    </section>
+
+    <section>
+      <h2>PDF &amp; envoi</h2>
+      <div class="field" style="max-width:400px">
+        <label>Email pour copie</label>
+        <input type="email" id="emailUser" placeholder="votre@email.fr">
+      </div>
+      <button type="button" id="btnEnvoyer">Créer PDF et envoyer</button>
+    </section>
+  </div>
+
+  <!-- JS tabs (léger, sans toucher app.js) -->
+  <script>
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const id = tab.dataset.tab;
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('panel-' + id).classList.add('active');
+      });
+    });
+
+    document.getElementById('parkingCovoiturage').addEventListener('change', function () {
+      document.getElementById('wrapNouveauParking').style.display =
+        this.value === 'autre' ? 'block' : 'none';
+    });
+  </script>
+
+  <script type="module" src="js/app.js"></script>
 </body>
-
 </html>
