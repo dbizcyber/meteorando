@@ -2,7 +2,6 @@ import { remplirMenu } from "./menuRandos.js";
 import { activerRecherche } from "./rechercheRandos.js";
 import { initHoraires } from "./horairesRando.js";
 import { remplirMenuAnimateurs } from "./menuAnimateurs.js";
-import { activerRechercheAnimateur } from "./rechercheAnimateur.js";
 import { remplirMenuParkings } from "./menuParkings.js";
 import { initCarte, chercherLieu } from "./carteParking.js";
 import { calculCovoiturage } from "./covoiturage.js";
@@ -77,7 +76,6 @@ initHoraires();
 
 remplirMenuAnimateurs();
 activerRechercheAnimateur();
-gestionAutreAnimateur();
 
 /* parkings covoiturage */
 
