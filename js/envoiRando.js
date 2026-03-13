@@ -35,9 +35,10 @@ async function envoyerRando() {
     if(canvas){
       profilPNG = canvas.toDataURL("image/png")
     }
+    console.log("profilPNG longueur:", profilPNG ? profilPNG.length : "null")
     console.log("resume:", resume)
     console.log("email:", emailUser)
-console.log("profilPNG longueur:", profilPNG ? profilPNG.length : "null")
+
     const response = await fetch(
       "https://whlxbfnmyqdflmxosfse.supabase.co/functions/v1/dynamic-handler",
       {
