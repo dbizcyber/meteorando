@@ -1,4 +1,4 @@
-let chartProfil
+export let chartProfil
 
 export function initProfilGPX(){
 
