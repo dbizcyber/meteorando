@@ -1,3 +1,4 @@
+console.log("envoiRandos.js chargé")
 export function initEnvoi() {
 
   document
@@ -7,6 +8,7 @@ export function initEnvoi() {
 }
 
 async function envoyerRando() {
+   console.log("envoyerRando déclenché")
 
   try {
 
