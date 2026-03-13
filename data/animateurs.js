@@ -1,18 +1,17 @@
 export const animateurs = [
-"Autre (saisir manuellement)",
-  
+"Autre... (saisir manuellement)",
 "ALEZINA Pierre Camille 06 03 18 76 16",
 "BIZARD Dominique 06 88 00 15 85",
 "BRIOUDE André 06 84 53 70 30",
 "BRUN Nadine 06 82 48 72 61",
 "CIBRARIO Christian 07 81 69 66 16",
-"DUPRÉ Roland 06 52 88 26 57",
+"DUPRE Roland 06 52 88 26 57",
 "DUVERNE Marie-Ange 06 29 12 33 65",
 "ELISSALDE Sylvie 06 77 91 03 61",
 "FABRE Henri 06 09 89 02 67",
 "GRANDPERRIN Brigitte 06 24 75 90 59",
 "GRANGE Bernard 06 21 56 59 70",
-"HERVÉ Jean-Luc 07 68 60 38 59",
+"HERVE Jean-Luc 07 68 60 38 59",
 "JOUVE Bernadette 06 74 49 96 90",
 "MARTIN Pierre 06 08 23 62 85",
 "NOUGUIER Annick 06 87 39 93 86",
@@ -24,5 +23,4 @@ export const animateurs = [
 "TAUSSIG Catherine 06 20 42 54 33",
 "VALDARCHI Jean-Claude 06 25 70 49 05",
 "TEST 06 01 02 03 04"
-
 ];
