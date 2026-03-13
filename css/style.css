@@ -1,577 +1,386 @@
 /* =========================
-   VARIABLES
+VARIABLES COULEURS
 ========================= */
-:root {
-  /* Bleu profond */
-  --bleu:        #1d3557;
-  --bleu-med:    #2b4a7a;
-  --bleu-clair:  #e8eef5;
-  --bleu-bord:   #c8d6e8;
 
-  /* Terracotta */
-  --terra:       #c1440e;
-  --terra-med:   #e07050;
-  --terra-clair: #fce8e0;
+:root{
 
-  /* Neutres */
-  --fond:        #f0f3f8;
-  --blanc:       #ffffff;
-  --txt:         #1a2533;
-  --txt2:        #6b7a8d;
-  --bord:        #dde3ed;
+--vert:#2d6a4f;
+--vert-clair:#95d5b2;
 
-  /* Raccourcis */
-  --radius:      10px;
-  --radius-lg:   14px;
-  --shadow:      0 2px 10px rgba(29,53,87,0.08);
+--bleu:#1d3557;
+--bleu-clair:#a8dadc;
+
+--orange:#f4a261;
+
+--violet:#6a4c93;
+
+--rouge:#e63946;
+
+--turquoise:#2a9d8f;
+
+--brun:#7f5539;
+
+--gris:#6c757d;
+
+--fond:#f1f5f9;
+
 }
 
 
 /* =========================
-   RESET
+STYLE GLOBAL
 ========================= */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+
+body{
+
+font-family: "Segoe UI", Roboto, Arial;
+background: var(--fond);
+margin:0;
+padding:30px;
+color:#333;
+
 }
 
+h1{
 
-/* =========================
-   BODY
-========================= */
-body {
-  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-  background: var(--fond);
-  color: var(--txt);
-  min-height: 100vh;
+text-align:center;
+margin-bottom:30px;
+color:var(--vert);
+font-size:32px;
+
 }
 
+h2{
 
-/* =========================
-   HEADER
-========================= */
-header {
-  background: var(--bleu);
-  padding: 0 24px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-}
+margin-top:0;
+font-size:20px;
 
-.header-inner {
-  max-width: 1000px;
-  margin: auto;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.header-logo {
-  color: var(--bleu-clair);
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: -0.3px;
-}
-
-.header-logo span {
-  color: var(--terra-med);
-}
-
-.header-date {
-  font-size: 12px;
-  color: rgba(232,238,245,0.55);
-  text-transform: capitalize;
-}
-
-
-/* =========================
-   ONGLETS
-========================= */
-.tabs-wrap {
-  background: var(--blanc);
-  border-bottom: 1px solid var(--bord);
-  position: sticky;
-  top: 52px;
-  z-index: 99;
-}
-
-.tabs {
-  max-width: 1000px;
-  margin: auto;
-  display: flex;
-  gap: 2px;
-  padding: 10px 24px 0;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.tabs::-webkit-scrollbar { display: none; }
-
-.tab {
-  padding: 8px 16px;
-  border-radius: 8px 8px 0 0;
-  border: 1px solid transparent;
-  border-bottom: none;
-  background: transparent;
-  font-family: inherit;
-  font-size: 13px;
-  color: var(--txt2);
-  cursor: pointer;
-  white-space: nowrap;
-  transition: color .15s, background .15s;
-  margin-bottom: -1px;
-}
-
-.tab:hover:not(.active) {
-  background: var(--bleu-clair);
-  color: var(--bleu-med);
-}
-
-.tab.active {
-  background: var(--fond);
-  color: var(--terra);
-  border-color: var(--bord);
-  font-weight: 500;
-}
-
-
-/* =========================
-   MAIN / PANELS
-========================= */
-main {
-  max-width: 1000px;
-  margin: auto;
-  padding: 24px;
-}
-
-.panel { display: none; }
-
-.panel.active {
-  display: block;
-  animation: fadeIn .2s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-
-/* =========================
-   SECTIONS
-========================= */
-section {
-  background: var(--blanc);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--bord);
-  padding: 22px 24px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow);
-}
-
-h2 {
-  font-size: 13px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: .7px;
-  color: var(--txt2);
-  margin-bottom: 18px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-h2::before {
-  content: '';
-  display: block;
-  width: 3px;
-  height: 13px;
-  background: var(--terra);
-  border-radius: 2px;
-  flex-shrink: 0;
-}
-
-
-/* =========================
-   GRILLES
-========================= */
-.grid2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-top: 12px;
-}
-
-.align-end { align-items: flex-end; }
-
-@media (max-width: 600px) {
-  .grid2 { grid-template-columns: 1fr; }
-}
-
-
-/* =========================
-   CHAMPS
-========================= */
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-top: 14px;
-}
-
-.field:first-child { margin-top: 0; }
-
-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--txt2);
-  margin-top: 0;
 }
 
 input,
 select,
-textarea {
-  width: 100%;
-  padding: 9px 12px;
-  border-radius: var(--radius);
-  border: 1px solid var(--bord);
-  background: var(--fond);
-  font-family: inherit;
-  font-size: 14px;
-  color: var(--txt);
-  transition: border-color .15s, box-shadow .15s;
-  box-sizing: border-box;
-  margin-top: 0;
+textarea{
+width:100%;
+box-sizing:border-box;
+padding:6px;
+border:1px solid #ccc;
+border-radius:6px;
+margin-top:4px;
+}
+/* =========================
+CARTE SECTION GENERIQUE
+========================= */
+#nomRando{
+background:#eee;
+color:#555;
+cursor:not-allowed;
+}
+section{
+
+background:white;
+border-radius:14px;
+padding:22px;
+margin-bottom:22px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+transition:0.2s;
+
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-  outline: none;
-  border-color: var(--bleu-med);
-  background: var(--blanc);
-  box-shadow: 0 0 0 3px rgba(29,53,87,.1);
-}
+section:hover{
 
-input[readonly],
-#nomRando {
-  background: #eef1f6;
-  color: var(--txt2);
-  cursor: default;
-}
+transform:translateY(-2px);
 
-textarea {
-  min-height: 90px;
-  resize: vertical;
 }
-
-/* select caché utilisé par JS */
-#rando { display: none; }
 
 
 /* =========================
-   RECHERCHE + SUGGESTIONS
+COULEURS PAR RUBRIQUE
 ========================= */
+
+section:nth-of-type(1){
+border-left:8px solid var(--vert);
+}
+
+section:nth-of-type(2){
+border-left:8px solid var(--bleu);
+}
+
+section:nth-of-type(3){
+border-left:8px solid var(--orange);
+}
+
+section:nth-of-type(4){
+border-left:8px solid var(--violet);
+}
+
+section:nth-of-type(5){
+border-left:8px solid var(--rouge);
+}
+
+section:nth-of-type(6){
+border-left:8px solid var(--turquoise);
+}
+
+section:nth-of-type(7){
+border-left:8px solid var(--brun);
+}
+
+section:nth-of-type(8){
+border-left:8px solid var(--gris);
+}
+
+section:nth-of-type(9){
+border-left:8px solid var(--vert-clair);
+}
+
+section:nth-of-type(10){
+border-left:8px solid var(--bleu);
+}
+
 .search-rando {
   position: relative;
 }
 
-.search-rando input {
-  padding-left: 36px;
-}
-
-.search-icon {
-  position: absolute;
-  left: 11px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 14px;
-  pointer-events: none;
-  z-index: 1;
-}
-
 #suggestions {
   position: absolute;
-  top: calc(100% + 4px);
+  top: 100%;      /* juste sous l’input */
   left: 0;
   width: 100%;
-  background: var(--blanc);
-  border: 1px solid var(--bord);
-  border-radius: var(--radius);
-  z-index: 1000;
+  background: white;
+  border: 1px solid #ccc;
   max-height: 200px;
   overflow-y: auto;
-  box-shadow: 0 4px 16px rgba(29,53,87,.12);
-  display: none;
+  border-radius: 6px;
+  z-index: 1000;
 }
 
 .suggestion {
-  padding: 10px 14px;
+  padding: 8px;
   cursor: pointer;
-  font-size: 14px;
-  border-bottom: 1px solid var(--bord);
 }
-
-.suggestion:last-child { border-bottom: none; }
 
 .suggestion:hover,
 .suggestion.highlight {
-  background: var(--bleu-clair);
-  color: var(--bleu-med);
+  background: #f0f0f0;
+}
+/* =========================
+FORMULAIRES
+========================= */
+
+label{
+
+display:block;
+margin-top:12px;
+font-weight:600;
+
+}
+
+input,
+select,
+textarea{
+
+width:100%;
+padding:10px;
+margin-top:6px;
+
+border-radius:8px;
+border:1px solid #ddd;
+
+font-size:14px;
+
+transition:0.2s;
+
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+
+border-color:var(--turquoise);
+outline:none;
+
+box-shadow:0 0 6px rgba(0,0,0,0.08);
+
+}
+
+textarea{
+
+min-height:90px;
+
 }
 
 
 /* =========================
-   BOUTONS
+BOUTONS MODERNES
 ========================= */
-button {
-  padding: 10px 20px;
-  border-radius: var(--radius);
-  border: none;
-  background: var(--terra);
-  color: var(--blanc);
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background .15s, transform .15s, box-shadow .15s;
-  margin-top: 12px;
-  white-space: nowrap;
+
+button{
+
+background:linear-gradient(135deg,var(--vert),var(--turquoise));
+
+border:none;
+color:white;
+
+padding:11px 20px;
+
+border-radius:8px;
+
+margin-top:14px;
+
+font-size:14px;
+
+cursor:pointer;
+
+transition:0.2s;
+
 }
 
-button:hover {
-  background: var(--bleu);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(29,53,87,.2);
+button:hover{
+
+transform:scale(1.04);
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+
 }
 
-button:active {
-  transform: scale(.98);
+/* =========================
+SELECT RANDO CACHE (utilisé par JS)
+========================= */
+
+#rando{
+display:none;
+}
+/* =========================
+CARTE LEAFLET
+========================= */
+
+#map{
+
+height:420px;
+margin-top:10px;
+border-radius:10px;
+border:1px solid #ddd;
+
 }
 
 
 /* =========================
-   MÉTÉO
+GRAPH ALTITUDE
 ========================= */
-.meteo-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-}
 
-@media (max-width: 600px) {
-  .meteo-grid { grid-template-columns: repeat(3, 1fr); }
-}
+canvas{
 
-.meteo-item {
-  background: var(--bleu-clair);
-  border-radius: var(--radius);
-  padding: 14px 8px;
-  text-align: center;
-  border: 1px solid var(--bleu-bord);
-}
+margin-top:20px;
+max-height:320px;
 
-.meteo-label {
-  font-size: 10px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-  color: var(--bleu-med);
-  margin-bottom: 6px;
-}
-
-.meteo-icon { font-size: 22px; margin-bottom: 5px; }
-
-.meteo-val {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--bleu);
 }
 
 
 /* =========================
-   STATS
+METEO
 ========================= */
-.stat-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-bottom: 14px;
+
+#meteoRando{
+
+background:#f0f7ff;
+padding:10px;
+border-radius:8px;
+
 }
 
-@media (max-width: 600px) {
-  .stat-row { grid-template-columns: repeat(2, 1fr); }
-}
+#meteoRando p{
 
-.stat {
-  background: var(--fond);
-  border-radius: var(--radius);
-  padding: 12px;
-  text-align: center;
-  border: 1px solid var(--bord);
-}
+margin:4px 0;
+font-size:15px;
 
-.stat-val {
-  font-size: 20px;
-  font-weight: 500;
-  color: var(--bleu);
-}
-
-.stat-lbl {
-  font-size: 11px;
-  color: var(--txt2);
-  margin-top: 3px;
-}
-
-/* spans de résultats inline (heureDepart, distanceAR, etc.) */
-span {
-  font-weight: 500;
-  color: var(--bleu);
 }
 
 
 /* =========================
-   COÛTS
+RESULTATS CALCULS
 ========================= */
-.cout-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 14px;
-}
 
-.cout-item {
-  background: var(--fond);
-  border-radius: var(--radius);
-  padding: 12px 14px;
-  border: 1px solid var(--bord);
-}
+span{
 
-.cout-lbl {
-  font-size: 11px;
-  color: var(--txt2);
-  margin-bottom: 4px;
-}
+font-weight:600;
+color:#2c3e50;
 
-.cout-val {
-  font-size: 17px;
-  font-weight: 500;
-  color: var(--bleu);
 }
 
 
 /* =========================
-   CARTE LEAFLET
+RESUME RANDO
 ========================= */
-#map {
-  height: 380px;
-  margin: 16px 0;
-  border-radius: var(--radius);
-  border: 1px solid var(--bord);
-}
 
-@media (max-width: 700px) {
-  #map { height: 260px; }
+#resumeRando{
+
+background:#f7fafc;
+border-left:6px solid var(--vert);
+
+padding:16px;
+
+border-radius:8px;
+
+white-space:pre-wrap;
+
+font-size:14px;
+line-height:1.5;
+
 }
 
 
 /* =========================
-   GPX DROP ZONE
+ANIMATION SECTIONS
 ========================= */
-.file-drop {
-  display: block;
-  border: 1.5px dashed var(--terra-med);
-  border-radius: var(--radius);
-  padding: 30px 20px;
-  text-align: center;
-  cursor: pointer;
-  color: var(--txt2);
-  font-size: 13px;
-  transition: background .15s, border-color .15s;
+
+section{
+
+animation:fadein 0.5s;
+
 }
 
-.file-drop:hover {
-  background: var(--terra-clair);
-  border-color: var(--terra);
-  color: var(--terra);
+@keyframes fadein{
+
+from{
+opacity:0;
+transform:translateY(8px);
 }
 
-.file-drop input { display: none; }
-.file-drop-icon { font-size: 28px; margin-bottom: 8px; }
-.file-drop-hint { font-size: 11px; color: var(--txt2); margin-top: 4px; }
-
-
-/* =========================
-   BARRE IBP
-========================= */
-.ibp-bar {
-  height: 10px;
-  border-radius: 5px;
-  background: linear-gradient(90deg, #5b9bd5, #e07050, #c1440e);
-  margin: 10px 0 5px;
-  position: relative;
+to{
+opacity:1;
+transform:translateY(0);
 }
 
-.ibp-dot {
-  position: absolute;
-  top: -4px;
-  width: 18px;
-  height: 18px;
-  background: var(--bleu);
-  border-radius: 50%;
-  transform: translateX(-50%);
-  border: 2px solid var(--blanc);
-  box-shadow: 0 1px 4px rgba(0,0,0,.2);
-  transition: left .4s ease;
-}
-
-.ibp-labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 10px;
-  color: var(--txt2);
-  margin-bottom: 10px;
 }
 
 
 /* =========================
-   PROFIL ALTITUDE
+RESPONSIVE MOBILE
 ========================= */
-canvas {
-  margin-top: 16px;
-  max-height: 300px;
+
+@media (max-width:700px){
+
+body{
+
+padding:12px;
+
 }
 
+section{
 
-/* =========================
-   RÉSUMÉ
-========================= */
-#resumeRando {
-  background: var(--fond);
-  border-left: 4px solid var(--terra);
-  padding: 16px;
-  border-radius: 0 var(--radius) var(--radius) 0;
-  white-space: pre-wrap;
-  font-family: inherit;
-  font-size: 14px;
-  line-height: 1.65;
-  color: var(--txt);
-  margin-top: 14px;
+padding:16px;
+
 }
 
+#map{
 
-/* =========================
-   RESPONSIVE MOBILE
-========================= */
-@media (max-width: 700px) {
-  main { padding: 14px; }
-  section { padding: 16px; }
-  button { width: 100%; }
-  .tabs { padding: 8px 12px 0; }
-  .tab { font-size: 12px; padding: 7px 12px; }
-  .header-date { display: none; }
+height:300px;
+
+}
+
+button{
+
+width:100%;
+
+}
+
 }
