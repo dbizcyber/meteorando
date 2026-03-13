@@ -57,7 +57,16 @@ font-size:20px;
 
 }
 
-
+input,
+select,
+textarea{
+width:100%;
+box-sizing:border-box;
+padding:6px;
+border:1px solid #ccc;
+border-radius:6px;
+margin-top:4px;
+}
 /* =========================
 CARTE SECTION GENERIQUE
 ========================= */
