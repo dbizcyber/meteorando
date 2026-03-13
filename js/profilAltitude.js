@@ -280,7 +280,7 @@ const colors=slopes.map(p=>couleurPente(p))
 
 if(chartProfil) chartProfil.destroy()
 
-chartProfil=new Chart(ctx,{
+chartProfil = new Chart(ctx,{
 type:"line",
 data:{
 datasets:[{
@@ -369,3 +369,7 @@ title:{display:true,text:"Altitude (m)"}
 })
 
 }
+}
+})
+
+window.chartProfil = chartProfil
