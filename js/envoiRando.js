@@ -55,7 +55,6 @@ async function envoyerRando() {
     )
 
     const data = await response.json()
-const data = await response.json()
 
     if (data.success) {
 
