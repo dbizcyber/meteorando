@@ -54,7 +54,6 @@ async function envoyerRando() {
   resume: resume,
   emailUser: emailUser,
   profilPNG: profilPNG
-})
         })
       }
     )
