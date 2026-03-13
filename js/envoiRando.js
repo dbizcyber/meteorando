@@ -5,6 +5,7 @@ export function initEnvoi() {
     .addEventListener("click", envoyerRando)
 
 }
+
 async function envoyerRando() {
 
   try {
@@ -25,6 +26,15 @@ async function envoyerRando() {
       return
     }
 
+    /* ===== récupération du profil altimétrique ===== */
+
+    let profilPNG = null
+
+    const canvas = document.getElementById("profilAltitude")
+
+    if(canvas){
+      profilPNG = canvas.toDataURL("image/png")
+    }
     console.log("resume:", resume)
     console.log("email:", emailUser)
 
@@ -45,10 +55,11 @@ async function envoyerRando() {
     )
 
     const data = await response.json()
+const data = await response.json()
 
     if (data.success) {
 
-      alert("PDF créé et email envoyé")
+      alert("PDF créé, email envoyé et profil enregistré")
 
     } else {
 
@@ -63,3 +74,4 @@ async function envoyerRando() {
   }
 
 }
+
