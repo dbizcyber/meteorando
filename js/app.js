@@ -65,7 +65,10 @@ champ.value = "";
 document.addEventListener("DOMContentLoaded", () => {
 
 console.log("Application MeteoRando initialisée");
-
+const dateInput = document.getElementById("dateRando");
+if(dateInput && !dateInput.value){
+  dateInput.value = new Date().toISOString().split("T")[0];
+}
 /* randonnées */
 
 remplirMenu();
