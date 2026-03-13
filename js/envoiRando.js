@@ -37,7 +37,7 @@ async function envoyerRando() {
     }
     console.log("resume:", resume)
     console.log("email:", emailUser)
-
+console.log("profilPNG longueur:", profilPNG ? profilPNG.length : "null")
     const response = await fetch(
       "https://whlxbfnmyqdflmxosfse.supabase.co/functions/v1/dynamic-handler",
       {
@@ -48,9 +48,9 @@ async function envoyerRando() {
           "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndobHhiZm5teXFkZmxteG9zZnNlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3ODA5MTksImV4cCI6MjA4ODM1NjkxOX0.vf3sdnJRnnXyIx998fhPSIUPX0WS7KqDbvAwesCzOcE"
         },
         body: JSON.stringify({
-      resume: resume,
-      emailUser: emailUser,
-      profilPNG: profilPNG
+      resume,
+      emailUser,
+      profilPNG
         })
       }
     )
