@@ -1,4 +1,3 @@
-console.log("envoiRando.js chargé");
 
 export function initEnvoi() {
   const btn = document.getElementById("btnEnvoyer");
@@ -9,19 +8,22 @@ export function initEnvoi() {
 async function envoyerRando() {
   console.log("envoyerRando déclenché");
 
-  // 1️⃣ Récupérer le résumé et l'email
-  const resume = document.getElementById("resumeRando").textContent.trim();
-  const emailUser = document.getElementById("emailUser").value.trim();
+  try {
+    // 1️⃣ Récupérer résumé et email
+    const resume = document.getElementById("resumeRando").textContent.trim();
+    const emailUser = document.getElementById("emailUser").value.trim();
 
-  if (!resume) return alert("Veuillez générer le résumé avant l'envoi");
-  if (!emailUser) return alert("Veuillez saisir un email");
+    if (!resume) return alert("Veuillez générer le résumé avant l'envoi");
+    if (!emailUser) return alert("Veuillez saisir un email");
 
-  // 2️⃣ Récupérer le profil altimétrique
-  const canvas = document.getElementById("profilAltitude");
-  if (!canvas) return alert("Profil altimétrique introuvable !");
-  
-  const profilPNG = canvas.toDataURL("image/png"); // Base64
-  console.log("profilPNG longueur :", profilPNG.length);
+    // 2️⃣ Récupérer le profil altimétrique
+    const canvas = document.getElementById("profilAltitude");
+    if (!canvas) return alert("Profil altimétrique introuvable !");
+    const profilPNG = canvas.toDataURL("image/png"); // Base64
+
+    console.log("profilPNG longueur :", profilPNG.length);
+    console.log("resume :", resume);
+    console.log("email :", emailUser);
 
   // 3️⃣ Envoyer vers Supabase
   try {
@@ -43,12 +45,16 @@ async function envoyerRando() {
     );
 
     const data = await response.json();
+
     if (data.success) {
-      alert("PDF créé, email envoyé et profil enregistré");
+      alert("PDF créé, email envoyé et profil enregistré !");
     } else {
       alert("Erreur : " + data.error);
+      console.error("Réponse serveur :", data);
     }
+
   } catch (err) {
+    console.error("Erreur réseau ou JS :", err);
     alert("Erreur réseau : " + err.message);
   }
 }
