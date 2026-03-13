@@ -61,7 +61,11 @@ font-size:20px;
 /* =========================
 CARTE SECTION GENERIQUE
 ========================= */
-
+#nomRando{
+background:#eee;
+color:#555;
+cursor:not-allowed;
+}
 section{
 
 background:white;
