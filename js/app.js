@@ -65,17 +65,21 @@ champ.value = "";
 document.addEventListener("DOMContentLoaded", () => {
 
 console.log("Application MeteoRando initialisée");
+
+/* date automatique */
+
 const dateInput = document.getElementById("dateRando");
+
 if(dateInput && !dateInput.value){
-  dateInput.value = new Date().toISOString().split("T")[0];
+dateInput.value = new Date().toISOString().split("T")[0];
 }
+
 /* randonnées */
 
 remplirMenu();
 activerRecherche();
 initHoraires();
 
-/* animateurs */
 /* animateurs */
 
 remplirMenuAnimateurs();
@@ -114,3 +118,21 @@ initProfilGPX();
 initResume();
 initEnvoi();
 
+/* météo mise à jour si date change */
+
+if(dateInput){
+
+dateInput.addEventListener("change", () => {
+
+const lat = document.getElementById("latParking").textContent;
+const lon = document.getElementById("lonParking").textContent;
+
+if(lat && lon){
+afficherMeteo(lat, lon);
+}
+
+});
+
+}
+
+});
