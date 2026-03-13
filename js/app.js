@@ -73,9 +73,10 @@ activerRecherche();
 initHoraires();
 
 /* animateurs */
+/* animateurs */
 
 remplirMenuAnimateurs();
-activerRechercheAnimateur();
+gestionAutreAnimateur();
 
 /* parkings covoiturage */
 
